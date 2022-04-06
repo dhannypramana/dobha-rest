@@ -16,8 +16,10 @@ class IsSuperAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth('admins')->guest() || auth('admins')->user()->username != 'superadmin') {
-            abort(403);
+        if (auth('admins-api')->guest() || auth('admins-api')->user()->username != 'superadmin') {
+            return response()->json([
+                'message' => 'unauthorized'
+            ]);
         }
 
         return $next($request);
