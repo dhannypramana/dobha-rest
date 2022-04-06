@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class AdminController extends Controller
 {
@@ -19,5 +21,15 @@ class AdminController extends Controller
     public function __invoke(Request $request)
     {
         return $request->user()->username;
+    }
+
+    public function index()
+    {
+        $admin = Admin::whereNotIn('id', [auth('admins-api')->id(1)])->get();
+
+        return response()->json([
+            'message' => 'success',
+            'admin' => $admin
+        ]);
     }
 }

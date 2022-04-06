@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Product\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::prefix('/auth')->group(function () {
     });
     // Admin Authentication
     Route::prefix('/admin')->group(function () {
+        Route::post('/read-all-admin', [AdminController::class, 'index'])->middleware('is_super_admin');
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');
@@ -37,17 +39,15 @@ Route::prefix('/article')->middleware('auth:admins-api')->group(function () {
     Route::post('/delete-article/{article:slug}', [ArticleController::class, 'destroy']);
 });
 
-Route::post('/read-all-article', [ArticleController::class, 'index']);
-Route::post('/read-article-by-slug/{article:slug}', [ArticleController::class, 'show']);
-
 Route::prefix('/product')->middleware('auth:admins-api')->group(function () {
     Route::post('/create-new-product', [ProductController::class, 'store']);
     Route::post('/update-product/{product:slug_produk}', [ProductController::class, 'update']);
     Route::post('/delete-product/{product:slug_produk}', [ProductController::class, 'destroy']);
 });
 
+// Accessible non Auth
+Route::post('/read-all-article', [ArticleController::class, 'index']);
+Route::post('/read-article-by-slug/{article:slug}', [ArticleController::class, 'show']);
+
 Route::post('/read-all-product', [ProductController::class, 'index']);
 Route::post('/read-product-by-slug/{product:slug_produk}', [ProductController::class, 'show']);
-
-Route::get('/user', 'App\Http\Controllers\UserController');
-Route::get('/admin', 'App\Http\Controllers\AdminController');
