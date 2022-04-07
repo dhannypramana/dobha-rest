@@ -26,7 +26,7 @@ Route::prefix('/auth')->group(function () {
     });
     // Admin Authentication
     Route::prefix('/admin')->group(function () {
-        Route::post('/read-all-admin', [AdminController::class, 'index'])->middleware('is_super_admin');
+        Route::get('/read-all-admin', [AdminController::class, 'index'])->middleware('is_super_admin');
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');
@@ -46,8 +46,8 @@ Route::prefix('/product')->middleware('auth:admins-api')->group(function () {
 });
 
 // Accessible non Auth
-Route::post('/read-all-article', [ArticleController::class, 'index']);
-Route::post('/read-article-by-slug/{article:slug}', [ArticleController::class, 'show']);
+Route::get('/read-all-article', [ArticleController::class, 'index']);
+Route::get('/read-article-by-slug/{article:slug}', [ArticleController::class, 'show']);
 
-Route::post('/read-all-product', [ProductController::class, 'index']);
-Route::post('/read-product-by-slug/{product:slug_produk}', [ProductController::class, 'show']);
+Route::get('/read-all-product', [ProductController::class, 'index']);
+Route::get('/read-product-by-slug/{product:slug_produk}', [ProductController::class, 'show']);
