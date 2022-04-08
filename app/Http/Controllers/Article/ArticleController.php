@@ -8,8 +8,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Article\Article;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ArticleCollection;
 
 class ArticleController extends Controller
 {
@@ -23,7 +24,7 @@ class ArticleController extends Controller
         // $article = Article::get();
 
         // Pagination
-        $article = Article::paginate(2);
+        $article = Article::paginate(4);
         return new ArticleCollection($article);
     }
 
@@ -38,13 +39,25 @@ class ArticleController extends Controller
         $request->validate([
             'title' => 'required|min:3|max:255',
             'body' => 'required',
+            'image' => 'file|image|mimes:jpg,jpeg,png|unique:articles',
         ]);
+
+        $imageName = "";
+
+        if($request->has('image')){
+            $extension      = $request->file('image')->extension();
+            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+
+            Storage::putFileAs('images', $request->file('image'), $imgName);
+        }
 
         $article = Article::create([
             'title' => $request->title,
             'body' => $request->body,
             'slug' => Str::slug($request->title),
             'excerpt' => Helpers::generateExcerpt($request->body),
+            'image' => $request->image
+            // 'image' => $imageName
         ]);
 
         return new ArticleResource($article);

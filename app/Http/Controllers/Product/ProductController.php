@@ -6,8 +6,9 @@ use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ProductCollection;
 
 class ProductController extends Controller
 {
@@ -18,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::paginate(2);
+        $product = Product::paginate(4);
         return new ProductCollection($product);
     }
 
@@ -36,10 +37,17 @@ class ProductController extends Controller
             'deskripsi_produk' => 'required',
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
+            'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
         ]);
 
-        /* Image Handling Logic Goes Here */
-        /* Image Handling Logic Goes Here */
+        $imageName = "";
+
+        if($request->has('gambar_produk')){
+            $extension      = $request->file('gambar_produk')->extension();
+            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+
+            Storage::putFileAs('images', $request->file('gambar_produk'), $imgName);
+        }
 
         $product = Product::create([
             'kode_produk' => $request->kode_produk,
@@ -48,6 +56,8 @@ class ProductController extends Controller
             'deskripsi_produk' => $request->deskripsi_produk,
             'stock_produk' => $request->stock_produk,
             'harga_satuan' => $request->harga_satuan,
+            'gambar_produk' => $request->gambar_produk
+            // 'gambar_produk' => $imgName
         ]);
 
         return new ProductResource($product);
