@@ -17,7 +17,7 @@ class RegisterController extends Controller
     public function __invoke(Request $request)
     {
         $request->validate([
-            'password' => 'required|min:3|max:25|',
+            'username' => 'required|min:3|max:25|',
             'password' => 'required|min:3|max:25|',
         ]);
 
