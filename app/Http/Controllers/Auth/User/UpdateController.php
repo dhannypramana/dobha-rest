@@ -34,7 +34,10 @@ class UpdateController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number,
-            'alamat' => $request->alamat
+            'alamat' => $request->alamat,
+            'provinsi' => $request->provinsi,
+            'kabupatne' => $request->kabupaten,
+            'id_kabupaten' => $request->id_kabupaten,
         ]);
 
         return response()->json([

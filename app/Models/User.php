@@ -22,7 +22,11 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone_number',
-        'alamat'
+        'alamat',
+        
+        'provinsi',
+        'kabupaten',
+        'id_kabupaten'
     ];
 
     /**
@@ -62,5 +66,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
     }
 }

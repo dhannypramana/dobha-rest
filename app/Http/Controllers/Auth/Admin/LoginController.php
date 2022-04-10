@@ -30,6 +30,7 @@ class LoginController extends Controller
         return response()->json([
             'message' => 'login success',
             'user' => $admin,
+            'expired_token' => 120 /* JWT TTLK */ * 60000,
             'token' => $token
         ]);
     }

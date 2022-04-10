@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone_number');
             $table->text('alamat')->nullable();
+
+            $table->string('provinsi');
+            $table->string('kabupaten');
+            $table->integer('id_kabupaten');
         });
     }
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ProductCollection;
+use App\Http\Resources\ReviewResource;
 
 class ProductController extends Controller
 {
@@ -69,9 +70,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($slug)
     {
-        return new ProductResource($product);
+        $products = Product::where('slug_produk', $slug)->with('review.user')->get();
+        // return response()->json([
+        //     'data' => $products
+        // ]);
+        return new ProductResource($products);
     }
 
     /**
@@ -98,7 +103,6 @@ class ProductController extends Controller
             'deskripsi_produk' => $request->deskripsi_produk,
             'stock_produk' => $request->stock_produk,
             'harga_satuan' => $request->harga_satuan,
-            'rating_produk' => $product->rating_produk
         ]);
 
         return new ProductResource($product);

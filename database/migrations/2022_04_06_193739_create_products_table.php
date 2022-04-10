@@ -16,7 +16,6 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
             $table->string('kode_produk')->unique();
             $table->string('nama_produk')->unique();
             $table->string('slug_produk')->unique();
@@ -24,7 +23,6 @@ class CreateProductsTable extends Migration
             $table->string('gambar_produk')->nullable();
             $table->integer('stock_produk');
             $table->integer('harga_satuan');
-            $table->integer('rating_produk')->default(0);
         });
     }
 

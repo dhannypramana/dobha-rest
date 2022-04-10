@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Product\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Product\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::prefix('/auth')->group(function () {
     });
 });
 
+// Accessible Admin Auth
 Route::prefix('/article')->middleware('auth:admins-api')->group(function () {
     Route::post('/create-new-article', [ArticleController::class, 'store']);
     Route::post('/update-article/{article:slug}', [ArticleController::class, 'update']);
@@ -45,9 +47,14 @@ Route::prefix('/product')->middleware('auth:admins-api')->group(function () {
     Route::post('/delete-product/{product:slug_produk}', [ProductController::class, 'destroy']);
 });
 
+// Accessible Auth User
+Route::prefix('/product')->middleware('auth:api')->group(function () {
+    Route::post('/review-product/{product:slug_produk}', ReviewController::class);
+});
+
 // Accessible non Auth
 Route::get('/read-all-article', [ArticleController::class, 'index']);
 Route::get('/read-article-by-slug/{article:slug}', [ArticleController::class, 'show']);
 
 Route::get('/read-all-product', [ProductController::class, 'index']);
-Route::get('/read-product-by-slug/{product:slug_produk}', [ProductController::class, 'show']);
+Route::get('/read-product/{slug}', [ProductController::class, 'show']);
