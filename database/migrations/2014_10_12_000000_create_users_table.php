@@ -24,11 +24,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone_number');
-            $table->text('alamat')->nullable();
 
-            $table->string('provinsi');
-            $table->string('kabupaten');
-            $table->integer('id_kabupaten');
+            // updated field
+            $table->text('alamat')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('kabupaten')->nullable();
+            $table->integer('id_kabupaten')->nullable();
         });
     }
 

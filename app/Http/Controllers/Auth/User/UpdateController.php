@@ -36,7 +36,7 @@ class UpdateController extends Controller
             'phone_number' => $request->phone_number,
             'alamat' => $request->alamat,
             'provinsi' => $request->provinsi,
-            'kabupatne' => $request->kabupaten,
+            'kabupaten' => $request->kabupaten,
             'id_kabupaten' => $request->id_kabupaten,
         ]);
 
