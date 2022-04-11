@@ -14,12 +14,17 @@ use App\Models\Review;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        $article = Product::get();
+        return new ProductCollection($article);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function paginate()
     {
         $product = Product::paginate(4);
         return new ProductCollection($product);

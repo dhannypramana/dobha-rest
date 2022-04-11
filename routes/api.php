@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Product\ReviewController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Product\ProductController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Product\ReviewController;
+use App\Http\Controllers\Auth\Admin\DeleteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::prefix('/auth')->group(function () {
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');
+        Route::post('/delete/{admin:username}', DeleteController::class);
     });
 });
 
@@ -57,5 +59,6 @@ Route::get('/read-all-article-paginate', [ArticleController::class, 'paginate'])
 Route::get('/read-all-article', [ArticleController::class, 'index']);
 Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
 
+Route::get('/read-all-product-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-product', [ProductController::class, 'index']);
 Route::get('/read-product/{slug}', [ProductController::class, 'show']);
