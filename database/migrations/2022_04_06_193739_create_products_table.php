@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('gambar_produk')->nullable();
             $table->integer('stock_produk');
             $table->integer('harga_satuan');
+            $table->float('rating_produk')->default(0);
         });
     }
 

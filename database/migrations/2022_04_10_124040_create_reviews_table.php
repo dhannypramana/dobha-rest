@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->text('body');
-            $table->integer('rate')->default(0);
+            $table->float('rate')->default(0);
             $table->foreignId('product_id');
             $table->foreignId('user_id');
 

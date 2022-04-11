@@ -17,6 +17,7 @@ class Product extends Model
         'gambar_produk',
         'stock_produk',
         'harga_satuan',
+        'rating_produk'
     ];
 
     public function review()

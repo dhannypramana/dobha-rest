@@ -34,6 +34,7 @@ class UpdateController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number,
+            
             'alamat' => $request->alamat,
             'provinsi' => $request->provinsi,
             'kabupaten' => $request->kabupaten,

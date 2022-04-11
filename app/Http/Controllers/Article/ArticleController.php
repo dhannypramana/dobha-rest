@@ -19,12 +19,22 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function paginate()
     {
         // $article = Article::get();
 
         // Pagination
         $article = Article::paginate(4);
+        return new ArticleCollection($article);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $article = Article::get();
         return new ArticleCollection($article);
     }
 
@@ -42,22 +52,25 @@ class ArticleController extends Controller
             'image' => 'file|image|mimes:jpg,jpeg,png|unique:articles',
         ]);
 
-        $imageName = "";
+        
+        $imgName = "";
 
         if($request->has('image')){
             $extension      = $request->file('image')->extension();
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
-            Storage::putFileAs('images', $request->file('image'), $imgName);
+            // Storage::putFileAs('images', $request->file('image'), $imgName);
+            $request->image->move(public_path('/images'), $imgName);
         }
+        
 
         $article = Article::create([
             'title' => $request->title,
             'body' => $request->body,
             'slug' => Str::slug($request->title),
             'excerpt' => Helpers::generateExcerpt($request->body),
-            'image' => $request->image
-            // 'image' => $imageName
+            // 'image' => $request->image
+            'image' => $imgName
         ]);
 
         return new ArticleResource($article);

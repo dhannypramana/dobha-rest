@@ -53,8 +53,9 @@ Route::prefix('/product')->middleware('auth:api')->group(function () {
 });
 
 // Accessible non Auth
+Route::get('/read-all-article-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-article', [ArticleController::class, 'index']);
-Route::get('/read-article-by-slug/{article:slug}', [ArticleController::class, 'show']);
+Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
 
 Route::get('/read-all-product', [ProductController::class, 'index']);
 Route::get('/read-product/{slug}', [ProductController::class, 'show']);

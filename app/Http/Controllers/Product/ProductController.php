@@ -10,6 +10,7 @@ use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ReviewResource;
+use App\Models\Review;
 
 class ProductController extends Controller
 {
@@ -41,7 +42,7 @@ class ProductController extends Controller
             'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
         ]);
 
-        $imageName = "";
+        $imgName = "";
 
         if($request->has('gambar_produk')){
             $extension      = $request->file('gambar_produk')->extension();
@@ -73,9 +74,6 @@ class ProductController extends Controller
     public function show($slug)
     {
         $products = Product::where('slug_produk', $slug)->with('review.user')->get();
-        // return response()->json([
-        //     'data' => $products
-        // ]);
         return new ProductResource($products);
     }
 
