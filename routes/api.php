@@ -6,6 +6,7 @@ use App\Http\Controllers\Product\ReviewController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Auth\Admin\DeleteController;
+use App\Http\Controllers\Auth\Admin\UpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,8 @@ Route::prefix('/auth')->group(function () {
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');
-        Route::post('/delete/{admin:username}', DeleteController::class);
+        Route::post('/delete/{admin:username}', DeleteController::class)->middleware('is_super_admin');
+        Route::post('/update/{admin:username}', UpdateController::class)->middleware('is_super_admin');
     });
 });
 

@@ -25,7 +25,7 @@ class DeleteController extends Controller
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'no data admin found'
+                'error' => $e
             ]);
         }
     }
