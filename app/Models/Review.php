@@ -13,7 +13,7 @@ class Review extends Model
         'body',
         'rate',
         'product_id',
-        'user_id'
+        'user_id',
     ];
 
     public function product()

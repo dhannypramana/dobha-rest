@@ -70,4 +70,5 @@ Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
 
 Route::get('/read-all-product-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-product', [ProductController::class, 'index']);
+Route::get('/popular-products', [ProductController::class, 'show_popular']);
 Route::get('/read-product/{slug}', [ProductController::class, 'show']);

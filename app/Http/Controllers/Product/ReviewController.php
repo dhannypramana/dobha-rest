@@ -79,9 +79,14 @@ class ReviewController extends Controller
 
     public function update($product_id, $review_id, Request $request)
     {
-
         try {
-            $review = Review::where('product_id', $product_id)->where('id', $review_id)->where('user_id', auth()->user()->id)->first();
+            $review = Review::where('product_id', $product_id)->where('id', $review_id)->where('user_id', auth('api')->user()->id)->first();
+
+            if ($review == null) {
+                return response()->json([
+                    'error' => 'no review found on this user'
+                ]);
+            }
             
             $request->validate([
                 'body' => 'required',

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
+use Exception;
 
 class ProductController extends Controller
 {
@@ -124,5 +125,21 @@ class ProductController extends Controller
         return response()->json([
             'success' => 'success delete product'
         ]);
+    }
+
+    public function show_popular()
+    {
+        try {
+            $products = Product::orderBy('rating_produk', 'DESC')->get();
+            
+            return response()->json([
+                'message' => 'success',
+                'data' => $products
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }
