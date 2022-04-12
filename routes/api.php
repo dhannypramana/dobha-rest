@@ -26,7 +26,7 @@ Route::prefix('/auth')->group(function () {
         Route::post('/register', 'App\Http\Controllers\Auth\User\RegisterController')->middleware('guest:api');
         Route::post('/login', 'App\Http\Controllers\Auth\User\LoginController')->middleware('guest:api');
         Route::post('/update/{user:username}', 'App\Http\Controllers\Auth\User\UpdateController')->middleware('auth:api');
-        Route::post('/logout', 'App\Http\Controllers\Auth\User\LogoutController')->middleware('auth:api');
+        Route::post('/logout', 'App\Http\Controllers\Auth\User\LogoutController')->middleware('auth:api');        
     });
     // Admin Authentication
     Route::prefix('/admin')->group(function () {
@@ -34,7 +34,7 @@ Route::prefix('/auth')->group(function () {
         Route::get('/read-admin/{admin:username}', [AdminController::class, 'show'])->middleware('is_super_admin');
         Route::get('/dashboard-data', DashboardController::class)->middleware('is_super_admin');
 
-        Route::post('/delete-review/{product_id}/{review_id}', [ReviewController::class, 'destroy']);
+        Route::post('/delete-review/{product_id}/{review_id}', [ReviewController::class, 'destroy'])->middleware('auth:admins-api');
 
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
@@ -60,6 +60,7 @@ Route::prefix('/product')->middleware('auth:admins-api')->group(function () {
 // Accessible Auth User
 Route::prefix('/product')->middleware('auth:api')->group(function () {
     Route::post('/review-product/{product:slug_produk}', ReviewController::class);
+    Route::post('/update-review/{product_id}/{review_id}', [ReviewController::class, 'update']);
 });
 
 // Accessible non Auth

@@ -76,4 +76,29 @@ class ReviewController extends Controller
             ]);
         }
     }
+
+    public function update($product_id, $review_id, Request $request)
+    {
+
+        try {
+            $review = Review::where('product_id', $product_id)->where('id', $review_id)->where('user_id', auth()->user()->id)->first();
+            
+            $request->validate([
+                'body' => 'required',
+            ]);
+            
+            $review->update([
+                'body' => $request->body
+            ]);
+            
+            return response()->json([
+                'message' => 'success update review',
+                'data' => $review
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }
