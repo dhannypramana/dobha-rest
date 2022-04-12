@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Product\ReviewController;
 use App\Http\Controllers\Article\ArticleController;
+use App\Http\Controllers\Auth\Admin\DashboardController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Auth\Admin\DeleteController;
 use App\Http\Controllers\Auth\Admin\UpdateController;
@@ -30,6 +31,9 @@ Route::prefix('/auth')->group(function () {
     // Admin Authentication
     Route::prefix('/admin')->group(function () {
         Route::get('/read-all-admin', [AdminController::class, 'index'])->middleware('is_super_admin');
+        Route::get('/read-admin/{admin:username}', [AdminController::class, 'show'])->middleware('is_super_admin');
+        Route::get('/dashboard-data', DashboardController::class)->middleware('is_super_admin');
+
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');

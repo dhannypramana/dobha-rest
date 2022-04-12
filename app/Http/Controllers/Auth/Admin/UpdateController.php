@@ -20,12 +20,10 @@ class UpdateController extends Controller
         try {
             $request->validate([
                 'username' => 'required|min:3|max:25',
-                'username' => 'required|min:3'
             ]);
 
             $admin->update([
                 'username' => $request->username,
-                'password' => $request->password
             ]);
 
             return response()->json([

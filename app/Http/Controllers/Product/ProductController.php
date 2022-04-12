@@ -78,7 +78,7 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $products = Product::where('slug_produk', $slug)->with('review.user')->get();
+        $products = Product::where('slug_produk', $slug)->with('review.user')->first();
         return new ProductResource($products);
     }
 

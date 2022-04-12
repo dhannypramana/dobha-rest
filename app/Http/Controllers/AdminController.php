@@ -32,4 +32,12 @@ class AdminController extends Controller
             'admin' => $admin
         ]);
     }
+
+    public function show(Admin $admin)
+    {
+        return response()->json([
+            'message' => 'success',
+            'admin' => $admin
+        ]);
+    }
 }
