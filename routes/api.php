@@ -34,6 +34,8 @@ Route::prefix('/auth')->group(function () {
         Route::get('/read-admin/{admin:username}', [AdminController::class, 'show'])->middleware('is_super_admin');
         Route::get('/dashboard-data', DashboardController::class)->middleware('is_super_admin');
 
+        Route::post('/delete-review/{product_id}/{review_id}', [ReviewController::class, 'destroy']);
+
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');

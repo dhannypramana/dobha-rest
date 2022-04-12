@@ -8,12 +8,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
+use Exception;
 
 class ReviewController extends Controller
 {
     public function calculateRating($product)
     {
-        // $products = Product::where('slug_produk', $slug)->get();
         $rating = 0;
 
         $total_review = Review::where('product_id', $product->id)->count();
@@ -57,5 +57,23 @@ class ReviewController extends Controller
         $this->calculateRating($product);
 
         return new ReviewResource($review);
+    }
+
+    public function destroy($product_id, $review_id)
+    {
+        try {
+            $review = Review::where('product_id', $product_id)->where('id', $review_id)->first();
+            $review->delete();
+
+            $this->calculateRating(Product::find($product_id));
+            
+            return response()->json([
+                'message' => 'success delete review'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }
