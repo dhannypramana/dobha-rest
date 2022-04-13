@@ -20,7 +20,7 @@ class CreateReviewsTable extends Migration
             $table->float('rate')->default(0);
             $table->foreignId('product_id');
             $table->foreignId('user_id');
-            $table->bigInteger('parent_id');
+            $table->bigInteger('parent_id')->nullable();
         });
     }
 

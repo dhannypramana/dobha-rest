@@ -35,13 +35,15 @@ Route::prefix('/auth')->group(function () {
         Route::get('/read-admin/{admin:username}', [AdminController::class, 'show'])->middleware('is_super_admin');
         Route::get('/dashboard-data', DashboardController::class)->middleware('is_super_admin');
 
-        Route::post('/delete-review/{product_id}/{review_id}', [ReviewController::class, 'destroy'])->middleware('auth:admins-api');
-
+        
         Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
         Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
         Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');
         Route::post('/delete/{admin:username}', DeleteController::class)->middleware('is_super_admin');
         Route::post('/update/{admin:username}', UpdateController::class)->middleware('is_super_admin');
+        
+        Route::post('/delete-review/{product_id}/{review_id}', [ReviewController::class, 'destroy'])->middleware('auth:admins-api');
+        Route::post('/reply-review/{product_id}/{review_id}', [AdminController::class, 'reply_review'])->middleware('auth:admins-api');
     });
 });
 
@@ -60,8 +62,8 @@ Route::prefix('/product')->middleware('auth:admins-api')->group(function () {
 
 // Accessible Auth User
 Route::prefix('/product')->middleware('auth:api')->group(function () {
-    Route::post('/review-product/{product:slug_produk}', ReviewController::class);
-    Route::post('/update-review/{product_id}/{review_id}', [ReviewController::class, 'update']);
+    Route::post('/review-product/{product_id}/{user_id}', ReviewController::class);
+    Route::post('/update-review/{product_id}/{review_id}/{user_id}', [ReviewController::class, 'update']);
 });
 
 // Accessible non Auth

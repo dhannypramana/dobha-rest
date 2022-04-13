@@ -39,22 +39,22 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Product $product , Request $request)
+    public function __invoke($product_id, $user_id, Request $request)
     {
-
         $request->validate([
             'body' => 'required',
             'rate' => 'required'
         ]);
 
         $review = Review::create([
+            'parent_id' => null,
             'body' => $request->body,
             'rate' => $request->rate,
-            'product_id' => $product->id,
-            'user_id' => auth()->user()->id
+            'product_id' => $product_id,
+            'user_id' => $user_id
         ]);
 
-        $this->calculateRating($product);
+        $this->calculateRating(Product::find($product_id));
 
         return new ReviewResource($review);
     }
@@ -77,10 +77,10 @@ class ReviewController extends Controller
         }
     }
 
-    public function update($product_id, $review_id, Request $request)
+    public function update($product_id, $review_id, $user_id, Request $request)
     {
         try {
-            $review = Review::where('product_id', $product_id)->where('id', $review_id)->where('user_id', auth('api')->user()->id)->first();
+            $review = Review::where('product_id', $product_id)->where('id', $review_id)->where('user_id', $user_id)->first();
 
             if ($review == null) {
                 return response()->json([
@@ -88,13 +88,12 @@ class ReviewController extends Controller
                 ]);
             }
             
-            $request->validate([
-                'body' => 'required',
-            ]);
-            
             $review->update([
-                'body' => $request->body
+                'body' => $request->body,
+                'rate' => $request->rate,
             ]);
+
+            $this->calculateRating(Product::find($product_id));
             
             return response()->json([
                 'message' => 'success update review',
