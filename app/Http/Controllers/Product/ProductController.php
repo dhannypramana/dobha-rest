@@ -130,7 +130,7 @@ class ProductController extends Controller
     public function show_popular()
     {
         try {
-            $products = Product::orderBy('rating_produk', 'DESC')->get();
+            $products = Product::orderBy('rating_produk', 'DESC')->limit(4)->get();
             
             return response()->json([
                 'message' => 'success',

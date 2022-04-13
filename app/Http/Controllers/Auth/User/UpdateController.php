@@ -23,18 +23,13 @@ class UpdateController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|min:3|max:25',
-            'email' => 'required|min:3|max:25',
-            'password' => 'required|min:3|max:25',
-            'phone_number' => 'required|min:11'
+            'alamat' => 'required|min:3|max:25',
+            'provinsi' => 'required|min:3|max:25',
+            'kabupaten' => 'required|min:3|max:25',
+            'id_kabupaten' => 'required'
         ]);
 
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'phone_number' => $request->phone_number,
-            
             'alamat' => $request->alamat,
             'provinsi' => $request->provinsi,
             'kabupaten' => $request->kabupaten,

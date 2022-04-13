@@ -20,9 +20,7 @@ class CreateReviewsTable extends Migration
             $table->float('rate')->default(0);
             $table->foreignId('product_id');
             $table->foreignId('user_id');
-            
-            /* Nested Comment (next feature) */
-            // "parentId": null,
+            $table->bigInteger('parent_id');
         });
     }
 
