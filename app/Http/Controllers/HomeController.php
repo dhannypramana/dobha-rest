@@ -14,7 +14,6 @@ class HomeController extends Controller
     {
         try {
             $products = Product::orderBy('created_at', 'DESC')->limit(4)->get();
-            return $products;
 
             return response()->json([
                 'message' => 'success',

@@ -143,4 +143,30 @@ class ProductController extends Controller
             ]);
         }
     }
+
+    public function confirm_invent($product_id, $buyed_total)
+    {
+        try {
+            $product = Product::find($product_id);
+            
+            if (!$product) {
+                return response()->json([
+                    'error' => 'no product found'
+                ]);
+            }
+
+            $product->update([
+                'stock_produk' => $product->stock_produk - $buyed_total
+            ]);
+
+            return response()->json([
+                'message' => 'success',
+                'data' => $product
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }

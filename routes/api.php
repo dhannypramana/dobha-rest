@@ -79,3 +79,6 @@ Route::get('/read-product/{slug}', [ProductController::class, 'show']);
 Route::get('/newest-products', [HomeController::class, 'newest_products']); 
 Route::get('/newest-articles', [HomeController::class, 'newest_articles']); 
 Route::get('/popular-products', [ProductController::class, 'show_popular']);
+
+// Transaction API
+Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::class, 'confirm_invent']);
