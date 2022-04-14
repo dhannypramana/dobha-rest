@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\User;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class LogoutController extends Controller
@@ -15,10 +16,16 @@ class LogoutController extends Controller
      */
     public function __invoke()
     {
-        auth()->logout();
-
-        return response()->json([
-            'message' => 'logout success'
-        ]);
+        try {
+            auth()->logout();
+    
+            return response()->json([
+                'message' => 'logout success'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
 
 class LoginController extends Controller
 {
@@ -16,22 +17,31 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
-        if (!$token = auth()->attempt($request->only('email', 'password'))) {
-            return response(null, 401);
+        try {
+            $request->validate([
+                'email' => 'required',
+                'password' => 'required',
+            ]);
+    
+            if (!$token = auth()->attempt($request->only('email', 'password'))) {
+                return response(null, 401)->json([
+                    'error' => 'email atau password salah'
+                ]);
+            }
+    
+            $user = User::where('email', $request->email)->first();
+    
+            return response()->json([
+                'message' => 'login success',
+                'user' => $user,
+                'expired_token' => 1 /* JWT TTL */ * 60000,
+                'token' => $token
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
         }
-
-        $user = User::where('email', $request->email)->first();
-
-        return response()->json([
-            'message' => 'login success',
-            'user' => $user,
-            'expired_token' => 1 /* JWT TTL */ * 60000,
-            'token' => $token
-        ]);
+        
     }
 }
