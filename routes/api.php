@@ -96,3 +96,7 @@ Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::
 // Verify Email API
 Route::post('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 Route::post('/email/resend/{id}', [VerificationController::class, 'resend'])->middleware(['auth:api'])->name('verification.resend');
+
+Route::get('/test', function () {
+    return User::all();
+});
