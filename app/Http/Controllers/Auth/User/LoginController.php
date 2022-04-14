@@ -27,7 +27,7 @@ class LoginController extends Controller
                 return response()->json([
                     'code' => '401',
                     'error' => 'username atau password salah'
-                ]);
+                ], 401);
             }
     
             $user = User::where('email', $request->email)->first();

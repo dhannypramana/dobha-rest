@@ -22,7 +22,7 @@ class RegisterController extends Controller
                 'name' => 'required|min:3|max:25',
                 'username' => 'required|min:3|max:25|unique:users,username',
                 'email' => 'required|min:3|max:25|unique:users,email',
-                'password' => 'required|min:3|max:25|',
+                'password' => 'required|min:8|max:20|',
                 'phone_number' => 'required|min:11'
             ]);
     
@@ -40,9 +40,9 @@ class RegisterController extends Controller
             ]);    
         } catch (Exception $e) {
             return response()->json([
-                'error' => $e->getMessage()
-            ]);
+                'error' => $e->getMessage(),
+                'message' => 'data tidak valid'
+            ], 422);
         }
-        
     }
 }
