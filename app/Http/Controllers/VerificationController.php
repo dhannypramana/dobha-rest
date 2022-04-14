@@ -27,6 +27,14 @@ class VerificationController extends Controller
 
     public function resend($id)
     {
+        // return $id." ".auth()->user()->id;
+
+        if (auth()->user()->id != $id) {
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+
         $user = User::find($id);
 
         if (!$user) {
