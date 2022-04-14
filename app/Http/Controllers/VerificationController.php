@@ -5,67 +5,46 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Auth\RedirectsUsers as RedirectUsers;
-use Illuminate\Foundation\Auth\VerifiesEmails as VerifiesEmails;
+use Illuminate\Auth\Events\Verified;
 
 class VerificationController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Email Verification Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling email verification for any
-    | user that recently registered with the application. Emails may also
-    | be re-sent if the user didn't receive the original email message.
-    |
-    */
-
-    // use VerifiesEmails, RedirectsUsers;
-
-    /**
-     * Where to redirect users after verification.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('signed')->only('verify');
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
-    }
-
-    /**
-     * Show the email verification notice.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function show(Request $request)
-    {
-        return $request->user()->hasVerifiedEmail()
-                        ? redirect($this->redirectPath())
-                        : view('verification.notice', [
-                            'pageTitle' => __('Account Verification')
-                        ]);
-    }
+    public function verify($id, $hash) {
+        $user = User::find($id);
     
-    public function resend($user_id)
+        abort_if(!$user, 403);
+        abort_if(!hash_equals($hash, sha1($user->getEmailForVerification())), 403);
+    
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+            event(new Verified($user));
+        }
+    
+        return response()->json([
+            'message' => 'email telah di verifikasi'
+        ], 200);
+    }
+
+    public function resend($id)
     {
-        if ($user_id != auth()->user()->id) {
+        $user = User::find($id);
+
+        if (!$user) {
             return response()->json([
-                'error' => 'Unauthorized'
+                'error' => 'tidak ada user'
             ], 401);
         }
 
-        $user = User::find($user_id);
+        if ($user->hasVerifiedEmail()) {
+            return response()->json([
+                'message' => 'user sudah melakukan verifikasi email'
+            ], 200);
+        }
+
         $user->sendEmailVerificationNotification();
+
+        return response()->json([
+            'message' => 'verifikasi email telah dikirim ulang'
+        ], 200);
     }
 }
