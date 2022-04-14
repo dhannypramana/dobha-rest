@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth\User;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Exception;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -32,6 +33,8 @@ class RegisterController extends Controller
             'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number
         ]);
+
+        event(new Registered($user));
 
         return response()->json([
             'message' => 'registration success',

@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\User\LoginController;
 use App\Http\Controllers\Auth\User\LogoutController;
 use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
+use App\Http\Controllers\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ Route::prefix('/product')->middleware('auth:admins-api')->group(function () {
 });
 
 // Accessible Auth User
-Route::prefix('/product')->middleware('auth:api')->group(function () {
+Route::prefix('/product')->middleware(['auth:api', 'verified'])->group(function () {
     Route::post('/review-product/{product_id}/{user_id}', ReviewController::class);
     Route::post('/update-review/{product_id}/{review_id}/{user_id}', [ReviewController::class, 'update']);
 });
@@ -89,3 +90,8 @@ Route::get('/popular-products', [ProductController::class, 'show_popular']);
 
 // Transaction API
 Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::class, 'confirm_invent']);
+
+// Verify Email API
+Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
+Route::post('/email/resend/{user_id}', [VerificationController::class, 'resend'])->name('verification.resend');
