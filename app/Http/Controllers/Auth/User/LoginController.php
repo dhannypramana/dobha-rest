@@ -17,31 +17,25 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request)
     {
-        try {
-            $request->validate([
-                'email' => 'required',
-                'password' => 'required',
-            ]);
-    
-            if (!$token = auth()->attempt($request->only('email', 'password'))) {
-                return response()->json([
-                    'code' => '401',
-                    'error' => 'username atau password salah'
-                ], 401);
-            }
-    
-            $user = User::where('email', $request->email)->first();
-    
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (!$token = auth()->attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'login success',
-                'user' => $user,
-                'expired_token' => 1 /* JWT TTL */ * 60000,
-                'token' => $token
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ]);
+                'code' => '401',
+                'error' => 'username atau password salah'
+            ], 401);
         }
+
+        $user = User::where('email', $request->email)->first();
+
+        return response()->json([
+            'message' => 'login success',
+            'user' => $user,
+            'expired_token' => 1 /* JWT TTL */ * 60000,
+            'token' => $token
+        ], 200);
     }
 }

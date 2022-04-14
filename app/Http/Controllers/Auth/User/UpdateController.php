@@ -21,7 +21,7 @@ class UpdateController extends Controller
             if (auth()->user()->username !== $user->username) {
                 return response()->json([
                     'message' => 'unauthorized'
-                ]);
+                ], 401);
             }
     
             $request->validate([
@@ -41,11 +41,11 @@ class UpdateController extends Controller
             return response()->json([
                 'message' => 'update user success',
                 'user' => $user,
-            ]);
+            ], 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
-            ]);
+            ], 422);
         }
     }
 }
