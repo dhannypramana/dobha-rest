@@ -16,7 +16,10 @@ use App\Http\Controllers\Auth\User\LoginController;
 use App\Http\Controllers\Auth\User\LogoutController;
 use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
-use App\Http\Controllers\VerificationController;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
+// use App\Http\Controllers\VerificationController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +95,18 @@ Route::get('/popular-products', [ProductController::class, 'show_popular']);
 Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::class, 'confirm_invent']);
 
 // Verify Email API
-Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
-Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
-Route::post('/email/resend/{user_id}', [VerificationController::class, 'resend'])->name('verification.resend');
+Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
+    $user = User::find($id);
+
+    abort_if(!$user, 403);
+    abort_if(!hash_equals($hash, sha1($user->getEmailForVerification())), 403);
+
+    if (!$user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+    }
+
+    return response()->json([
+        'message' => 'email telah di verifikasi'
+    ], 200);
+})->middleware(['signed'])->name('verification.verify');
