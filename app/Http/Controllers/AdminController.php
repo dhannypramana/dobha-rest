@@ -14,16 +14,6 @@ class AdminController extends Controller
     {
         $this->middleware('auth:admins-api');
     }
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
-    {
-        return $request->user()->username;
-    }
 
     public function index()
     {

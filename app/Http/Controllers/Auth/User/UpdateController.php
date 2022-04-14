@@ -24,13 +24,6 @@ class UpdateController extends Controller
                 ], 401);
             }
     
-            $request->validate([
-                'alamat' => 'required|min:3|max:25',
-                'provinsi' => 'required|min:3|max:25',
-                'kabupaten' => 'required|min:3|max:25',
-                'id_kabupaten' => 'required'
-            ]);
-    
             $user->update([
                 'alamat' => $request->alamat,
                 'provinsi' => $request->provinsi,

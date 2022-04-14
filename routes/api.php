@@ -38,15 +38,14 @@ Route::prefix('/auth')->group(function () {
     Route::prefix('/user')->group(function () {
         Route::post('/register', RegisterController::class)->middleware('guest:api');
         Route::post('/login', LoginController::class)->middleware('guest:api');
-        Route::post('/update/{user:username}', UserUpdateController::class)->middleware('auth:api');
+        Route::post('/update/{user:username}', UserUpdateController::class)->middleware(['auth:api', 'verified']);
         Route::post('/logout', LogoutController::class)->middleware('auth:api');        
     });
     // Admin Authentication
     Route::prefix('/admin')->group(function () {
         Route::get('/read-all-admin', [AdminController::class, 'index'])->middleware('is_super_admin');
         Route::get('/read-admin/{admin:username}', [AdminController::class, 'show'])->middleware('is_super_admin');
-        Route::get('/dashboard-data', DashboardController::class)->middleware('is_super_admin');
-
+        Route::get('/dashboard-data', DashboardController::class)->middleware('auth:admins-api');
 
         Route::post('/register', AdminRegisterController::class)->middleware('is_super_admin');
         Route::post('/login', AdminLoginController::class)->middleware('guest:admins-api');
@@ -87,7 +86,6 @@ Route::get('/read-all-product-paginate', [ArticleController::class, 'paginate'])
 Route::get('/read-all-product', [ProductController::class, 'index']);
 Route::get('/read-product/{slug}', [ProductController::class, 'show']);
 
-// Home API
 Route::get('/newest-products', [HomeController::class, 'newest_products']); 
 Route::get('/newest-articles', [HomeController::class, 'newest_articles']); 
 Route::get('/popular-products', [ProductController::class, 'show_popular']);
