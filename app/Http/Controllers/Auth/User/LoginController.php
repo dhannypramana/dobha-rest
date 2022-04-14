@@ -24,8 +24,9 @@ class LoginController extends Controller
             ]);
     
             if (!$token = auth()->attempt($request->only('email', 'password'))) {
-                return response(null, 401)->json([
-                    'error' => 'email atau password salah'
+                return response()->json([
+                    'code' => '401',
+                    'error' => 'username atau password salah'
                 ]);
             }
     
@@ -42,6 +43,5 @@ class LoginController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-        
     }
 }
