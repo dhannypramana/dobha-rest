@@ -9,6 +9,13 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Auth\Admin\DeleteController;
 use App\Http\Controllers\Auth\Admin\UpdateController;
 use App\Http\Controllers\Auth\Admin\DashboardController;
+use App\Http\Controllers\Auth\Admin\LoginController as AdminLoginController;
+use App\Http\Controllers\Auth\Admin\LogoutController as AdminLogoutController;
+use App\Http\Controllers\Auth\Admin\RegisterController as AdminRegisterController;
+use App\Http\Controllers\Auth\User\LoginController;
+use App\Http\Controllers\Auth\User\LogoutController;
+use App\Http\Controllers\Auth\User\RegisterController;
+use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +31,10 @@ use App\Http\Controllers\Auth\Admin\DashboardController;
 Route::prefix('/auth')->group(function () {
     // User Authentication
     Route::prefix('/user')->group(function () {
-        Route::post('/register', 'App\Http\Controllers\Auth\User\RegisterController')->middleware('guest:api');
-        Route::post('/login', 'App\Http\Controllers\Auth\User\LoginController')->middleware('guest:api');
-        Route::post('/update/{user:username}', 'App\Http\Controllers\Auth\User\UpdateController')->middleware('auth:api');
-        Route::post('/logout', 'App\Http\Controllers\Auth\User\LogoutController')->middleware('auth:api');        
+        Route::post('/register', RegisterController::class)->middleware('guest:api');
+        Route::post('/login', LoginController::class)->middleware('guest:api');
+        Route::post('/update/{user:username}', UserUpdateController::class)->middleware('auth:api');
+        Route::post('/logout', LogoutController::class)->middleware('auth:api');        
     });
     // Admin Authentication
     Route::prefix('/admin')->group(function () {
@@ -35,10 +42,10 @@ Route::prefix('/auth')->group(function () {
         Route::get('/read-admin/{admin:username}', [AdminController::class, 'show'])->middleware('is_super_admin');
         Route::get('/dashboard-data', DashboardController::class)->middleware('is_super_admin');
 
-        
-        Route::post('/register', 'App\Http\Controllers\Auth\Admin\RegisterController')->middleware('is_super_admin');
-        Route::post('/login', 'App\Http\Controllers\Auth\Admin\LoginController')->middleware('guest:admins-api');
-        Route::post('/logout', 'App\Http\Controllers\Auth\Admin\LogoutController')->middleware('auth:admins-api');
+
+        Route::post('/register', AdminRegisterController::class)->middleware('is_super_admin');
+        Route::post('/login', AdminLoginController::class)->middleware('guest:admins-api');
+        Route::post('/logout', AdminLogoutController::class)->middleware('auth:admins-api');
         Route::post('/delete/{admin:username}', DeleteController::class)->middleware('is_super_admin');
         Route::post('/update/{admin:username}', UpdateController::class)->middleware('is_super_admin');
         
