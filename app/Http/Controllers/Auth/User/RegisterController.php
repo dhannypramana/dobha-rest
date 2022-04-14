@@ -27,7 +27,7 @@ class RegisterController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => strtolower($request->name),
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
