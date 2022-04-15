@@ -42,8 +42,6 @@ Route::prefix('/auth')->group(function () {
         Route::post('/update-alamat/{user:username}', UserUpdateController::class)->middleware(['auth:api', 'verified']);
         Route::post('/update-user/{user:username}', UserUpdateController::class, 'update_user')->middleware(['auth:api', 'verified']);
         Route::post('/logout', LogoutController::class)->middleware('auth:api');
-        
-        // update user
         // update gambar
     });
     // Admin Authentication
@@ -103,4 +101,4 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'
 Route::get('/email/resend/{id}', [VerificationController::class, 'resend'])->middleware(['auth:api'])->name('verification.resend');
 
 // Get Data User
-Route::get('/user/{id}', [UserController::class, '']);
+Route::get('/user/{id}', [UserController::class, 'show']);
