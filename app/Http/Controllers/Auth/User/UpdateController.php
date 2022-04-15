@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Database\QueryException;
 
 class UpdateController extends Controller
 {
@@ -32,13 +33,40 @@ class UpdateController extends Controller
             ]);
     
             return response()->json([
-                'message' => 'update user success',
+                'message' => 'update user address success',
                 'user' => $user,
             ], 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
             ], 422);
+        }
+    }
+
+    public function update_user(Request $request, User $user)
+    {
+        try {
+            if (auth()->user()->username !== $user->username) {
+                return response()->json([
+                    'message' => 'unauthorized'
+                ], 401);
+            }
+
+            $user->update([
+                'name' => $request->name,
+                'username' => $request->username,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+            ]);
+
+            return response()->json([
+                'message' => 'update user success',
+                'user' => $user,
+            ], 200);
+        } catch (QueryException $qe) {
+            return response()->json([
+                'error' => 'failed' . $qe->getMessage()
+            ]);
         }
     }
 }
