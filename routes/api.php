@@ -39,8 +39,8 @@ Route::prefix('/auth')->group(function () {
     Route::prefix('/user')->group(function () {
         Route::post('/register', RegisterController::class)->middleware('guest:api');
         Route::post('/login', LoginController::class)->middleware('guest:api');
-        Route::post('/update-alamat/{user:username}', UserUpdateController::class)->middleware(['auth:api', 'verified']);
-        Route::post('/update-user/{user:username}', UserUpdateController::class, 'update_user')->middleware(['auth:api', 'verified']);
+        Route::post('/update-alamat/{user:username}', UserUpdateController::class)->middleware('verified');
+        Route::post('/update-user/{user:username}', UserUpdateController::class, 'update_user')->middleware('verified');
         Route::post('/logout', LogoutController::class)->middleware('auth:api');
         // update gambar
     });
