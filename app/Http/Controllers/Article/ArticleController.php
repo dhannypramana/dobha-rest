@@ -125,4 +125,16 @@ class ArticleController extends Controller
             'success' => 'success delete article'
         ]);
     }
+
+    public function show_related($slug)
+    {
+        $keyword = explode('-', $slug);
+
+        $related_articles = Article::where('title','like',"%".$keyword[rand(0, count($keyword)-1)]."%")->limit(3)->get();
+        
+        return response()->json([
+            'message' => 'get related articles',
+            'data' => $related_articles
+        ]);
+    }
 }

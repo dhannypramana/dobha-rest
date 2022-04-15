@@ -84,6 +84,7 @@ Route::prefix('/product')->middleware(['auth:api', 'verified'])->group(function 
 Route::get('/read-all-article-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-article', [ArticleController::class, 'index']);
 Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
+Route::get('/related-articles/{slug}', [ArticleController::class, 'show_related']);
 
 Route::get('/read-all-product-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-product', [ProductController::class, 'index']);
