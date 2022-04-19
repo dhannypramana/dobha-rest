@@ -173,7 +173,7 @@ class ProductController extends Controller
     public function show_related($category_id)
     {
         $related_product = Product::where('product_category_id', $category_id)
-                            ->limit(3)
+                            ->limit(5)
                             ->get();
 
         return response()->json([
