@@ -64,7 +64,8 @@ class ProductController extends Controller
             'deskripsi_produk' => $request->deskripsi_produk,
             'stock_produk' => $request->stock_produk,
             'harga_satuan' => $request->harga_satuan,
-            'gambar_produk' => $request->gambar_produk
+            'gambar_produk' => $request->gambar_produk,
+            'product_category_id' => $request->product_category_id
             // 'gambar_produk' => $imgName
         ]);
 
@@ -108,6 +109,7 @@ class ProductController extends Controller
             'deskripsi_produk' => $request->deskripsi_produk,
             'stock_produk' => $request->stock_produk,
             'harga_satuan' => $request->harga_satuan,
+            'product_category_id' => $request->product_category_id
         ]);
 
         return new ProductResource($product);
