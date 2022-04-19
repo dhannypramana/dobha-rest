@@ -107,6 +107,7 @@ class ArticleController extends Controller
             'body' => $request->body,
             'slug' => Str::slug($request->title),
             'excerpt' => Helpers::generateExcerpt($request->body),
+            'category_id' => $request->category_id,
         ]);
 
         return new ArticleResource($article);
