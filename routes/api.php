@@ -16,6 +16,8 @@ use App\Http\Controllers\Auth\User\LoginController;
 use App\Http\Controllers\Auth\User\LogoutController;
 use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use App\Models\User;
@@ -81,10 +83,14 @@ Route::prefix('/product')->middleware(['auth:api', 'verified'])->group(function 
 });
 
 // Accessible non Auth
+Route::resource('article-category', CategoryController::class)->except(['edit', 'create']);
+Route::resource('product-category', ProductCategoryController::class)->except(['edit', 'create']);
+
 Route::get('/read-all-article-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-article', [ArticleController::class, 'index']);
 Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
-Route::get('/related-articles/{slug}', [ArticleController::class, 'show_related']);
+Route::get('/related-articles/{category_id}', [ArticleController::class, 'show_related']);
+Route::get('/related-products/{category_id}', [ProductController::class, 'show_related']);
 
 Route::get('/read-all-product-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-product', [ProductController::class, 'index']);
@@ -93,6 +99,9 @@ Route::get('/read-product/{slug}', [ProductController::class, 'show']);
 Route::get('/newest-products', [HomeController::class, 'newest_products']); 
 Route::get('/newest-articles', [HomeController::class, 'newest_articles']); 
 Route::get('/popular-products', [ProductController::class, 'show_popular']);
+
+Route::get('/sort/newest-products', [HomeController::class, 'sort_newest_products']); 
+Route::get('/sort/popular-products', [ProductController::class, 'sort_show_popular']);
 
 // Transaction API
 Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::class, 'confirm_invent']);

@@ -17,11 +17,17 @@ class Product extends Model
         'gambar_produk',
         'stock_produk',
         'harga_satuan',
-        'rating_produk'
+        'rating_produk',
+        'product_category_id'
     ];
 
     public function review()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function product_category()
+    {
+        return $this->belongsTo(ProductCategory::class);
     }
 }

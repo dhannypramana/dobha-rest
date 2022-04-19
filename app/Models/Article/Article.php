@@ -2,6 +2,7 @@
 
 namespace App\Models\Article;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,5 +16,11 @@ class Article extends Model
         'body',
         'excerpt',
         'image',
+        'category_id'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

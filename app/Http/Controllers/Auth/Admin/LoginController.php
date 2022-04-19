@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -22,7 +23,9 @@ class LoginController extends Controller
         ]);
 
         if (!$token = auth('admins-api')->attempt($request->only('username', 'password'))) {
-            return response(null, 401);
+            return response()->json([
+                'error' => 'username atau password salah'
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $admin = Admin::where('username', $request->username)->first();

@@ -22,6 +22,8 @@ class ArticleResource extends JsonResource
             'body' => $this->body,
             'excerpt' => $this->excerpt,
             'image' => $this->image,
+            'category_id' => $this->category_id,
+            'category' => $this->category->name,
             'published' => $this->created_at->format('j F Y, H:i a'),
             'published_diff' => $this->created_at->diffForHumans(),
             'updated' => $this->updated_at->format('j F Y, H:i a'),

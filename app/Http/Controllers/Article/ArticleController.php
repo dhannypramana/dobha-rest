@@ -50,6 +50,7 @@ class ArticleController extends Controller
             'title' => 'required|min:3|max:255',
             'body' => 'required',
             'image' => 'file|image|mimes:jpg,jpeg,png|unique:articles',
+            'category_id' => 'required'
         ]);
 
         
@@ -62,15 +63,15 @@ class ArticleController extends Controller
             // Storage::putFileAs('images', $request->file('image'), $imgName);
             $request->image->move(public_path('/images'), $imgName);
         }
-        
 
         $article = Article::create([
             'title' => $request->title,
             'body' => $request->body,
+            'category_id' => $request->category_id,
             'slug' => Str::slug($request->title),
             'excerpt' => Helpers::generateExcerpt($request->body),
             // 'image' => $request->image
-            'image' => $imgName
+            'image' => $imgName,
         ]);
 
         return new ArticleResource($article);
@@ -126,12 +127,12 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function show_related($slug)
+    public function show_related($category_id)
     {
-        $keyword = explode('-', $slug);
+        $related_articles = Article::where('category_id', $category_id)
+                            ->limit(3)
+                            ->get();
 
-        $related_articles = Article::where('title','like',"%".$keyword[rand(0, count($keyword)-1)]."%")->limit(3)->get();
-        
         return response()->json([
             'message' => 'get related articles',
             'data' => $related_articles

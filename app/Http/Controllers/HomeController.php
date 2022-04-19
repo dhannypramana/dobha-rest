@@ -25,6 +25,22 @@ class HomeController extends Controller
             ]);
         }
     }
+
+    public function sort_newest_products()
+    {
+        try {
+            $products = Product::orderBy('created_at', 'DESC')->paginate(5);
+
+            return response()->json([
+                'message' => 'newest products with paginate(5)',
+                'data' => $products
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
     
     public function newest_articles()
     {

@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->integer('stock_produk');
             $table->integer('harga_satuan');
             $table->float('rating_produk')->default(0);
+            $table->foreignId('product_category_id');
         });
     }
 

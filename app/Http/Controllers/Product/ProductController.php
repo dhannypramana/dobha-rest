@@ -17,8 +17,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $article = Product::get();
-        return new ProductCollection($article);
+        $product = Product::get();
+        return new ProductCollection($product);
     }
     /**
      * Display a listing of the resource.
@@ -162,6 +162,35 @@ class ProductController extends Controller
             return response()->json([
                 'message' => 'success',
                 'data' => $product
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function show_related($category_id)
+    {
+        $related_product = Product::where('product_category_id', $category_id)
+                            ->limit(3)
+                            ->get();
+
+        return response()->json([
+            'message' => 'get related product',
+            'data' => $related_product
+        ]);
+    }
+
+    public function sort_show_popular()
+    {
+        try {
+            $products = Product::orderBy('rating_produk', 'DESC')->paginate(5);
+            
+            return response()->json([
+                'message' => 'popular products with paginate(5)',
+                // 'products' => $products->toArray()['data']
+                'products' => $products
             ]);
         } catch (Exception $e) {
             return response()->json([
