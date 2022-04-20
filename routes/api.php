@@ -22,6 +22,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use App\Models\User;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Auth\Events\Verified;
 // use App\Http\Controllers\VerificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -115,3 +116,12 @@ Route::get('/email/resend/{id}', [VerificationController::class, 'resend'])->mid
 
 // Get Data User
 Route::get('/user/{id}', [UserController::class, 'show']);
+
+// Testing Email
+Route::get('/cek-email', function(Request $request) {
+    if(!$this->validEmail($request->email)) {
+        return response()->json([
+            'message' => 'Email does not exist.'
+        ], 404);
+    }
+});

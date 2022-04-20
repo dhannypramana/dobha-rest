@@ -100,6 +100,7 @@ class ProductController extends Controller
             'deskripsi_produk' => 'required',
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
+            'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
         ]);
 
         $product->update([
