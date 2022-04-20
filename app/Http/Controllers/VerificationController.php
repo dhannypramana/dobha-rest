@@ -19,10 +19,11 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
             event(new Verified($user));
         }
-    
-        return response()->json([
-            'message' => 'email telah di verifikasi'
-        ], 200);
+        
+        return view('verifications.verified');
+        // return response()->json([
+        //     'message' => 'email telah di verifikasi'
+        // ], 200);
     }
 
     public function resend($id)
