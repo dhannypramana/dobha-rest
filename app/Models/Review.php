@@ -24,6 +24,6 @@ class Review extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->select(['id', 'username']);
+        return $this->belongsTo(User::class)->select(['id', 'name' ,'username']);
     }
 }
