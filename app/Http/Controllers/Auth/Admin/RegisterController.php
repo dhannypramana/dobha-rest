@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RegisterController extends Controller
 {
@@ -17,13 +18,13 @@ class RegisterController extends Controller
     public function __invoke(Request $request)
     {
         $request->validate([
-            'username' => 'required|min:3|max:25|',
+            'username' => 'required|min:3|max:25|unique:admins,username',
             'password' => 'required|min:3|max:25|',
         ]);
 
 
         Admin::create([
-            'username' => $request->username,
+            'username' => Str::lower($request->username),
             'password' => bcrypt($request->password),
         ]);
 

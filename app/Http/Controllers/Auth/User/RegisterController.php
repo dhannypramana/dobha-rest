@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\User;
 
 use Exception;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -27,9 +28,9 @@ class RegisterController extends Controller
         ]);
 
         $user = User::create([
-            'name' => strtolower($request->name),
-            'username' => $request->username,
-            'email' => $request->email,
+            'name' => Str::lower($request->name),
+            'username' => Str::lower($request->username),
+            'email' => Str::lower($request->email),
             'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number
         ]);
