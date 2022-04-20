@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use App\Models\User;
@@ -102,6 +103,8 @@ Route::get('/popular-products', [ProductController::class, 'show_popular']);
 
 Route::get('/sort/newest-products', [HomeController::class, 'sort_newest_products']); 
 Route::get('/sort/popular-products', [ProductController::class, 'sort_show_popular']);
+
+Route::get('/search/{keyword}', SearchController::class);
 
 // Transaction API
 Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::class, 'confirm_invent']);
