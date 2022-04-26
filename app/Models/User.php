@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Article\Article;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
@@ -72,5 +73,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function review()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = 'https://dobha.herokuapp.com/reset-password?token='.$token;
+        $this->notify(new ResetPasswordNotification($url));
     }
 }

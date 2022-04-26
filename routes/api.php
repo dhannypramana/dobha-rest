@@ -1,31 +1,32 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Product\ReviewController;
 use App\Http\Controllers\Article\ArticleController;
+use App\Http\Controllers\Auth\User\LoginController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\Auth\User\LogoutController;
 use App\Http\Controllers\Auth\Admin\DeleteController;
 use App\Http\Controllers\Auth\Admin\UpdateController;
+use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\Admin\DashboardController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\Auth\Admin\LoginController as AdminLoginController;
+use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
+// use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\Admin\LogoutController as AdminLogoutController;
 use App\Http\Controllers\Auth\Admin\RegisterController as AdminRegisterController;
-use App\Http\Controllers\Auth\User\LoginController;
-use App\Http\Controllers\Auth\User\LogoutController;
-use App\Http\Controllers\Auth\User\RegisterController;
-use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductCategoryController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VerificationController;
-use App\Models\User;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Auth\Events\Verified;
-// use App\Http\Controllers\VerificationController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,14 +115,11 @@ Route::post('/is-buyed-confirm/{product_id}/{buyed_total}', [ProductController::
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 Route::get('/email/resend/{id}', [VerificationController::class, 'resend'])->middleware(['auth:api'])->name('verification.resend');
 
+// Forgot Password API
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_password']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'reset_password']);
+Route::get('/form-reset-password', [ForgotPasswordController::class, 'reset_password']);
+
+
 // Get Data User
 Route::get('/user/{id}', [UserController::class, 'show']);
-
-// Testing Email
-Route::get('/cek-email', function(Request $request) {
-    if(!$this->validEmail($request->email)) {
-        return response()->json([
-            'message' => 'Email does not exist.'
-        ], 404);
-    }
-});
