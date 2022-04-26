@@ -18,7 +18,7 @@ class ResetPasswordNotification extends Notification
      *
      * @return void
      */
-    public function __construct(string $url)
+    public function __construct($url)
     {
         $this->url = $url;
     }
@@ -43,8 +43,8 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Forgot Password?')
-                    ->action('Click to reset', $this->url)
+                    ->line('Hello')
+                    ->action('Reset Password ?', $this->url)
                     ->line('Thank you for using our application!');
     }
 

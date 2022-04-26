@@ -116,7 +116,7 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'
 Route::get('/email/resend/{id}', [VerificationController::class, 'resend'])->middleware(['auth:api'])->name('verification.resend');
 
 // Forgot Password API
-Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_password']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_password']); // get $request->email
 Route::post('/reset-password', [ForgotPasswordController::class, 'reset_password']);
 Route::get('/form-reset-password', [ForgotPasswordController::class, 'reset_password']);
 
