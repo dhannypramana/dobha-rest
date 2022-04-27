@@ -119,7 +119,7 @@ Route::get('/email/resend/{id}', [VerificationController::class, 'resend'])->mid
 // Forgot Password API
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_password']); // get $request->email
 Route::post('/reset-password', [ForgotPasswordController::class, 'reset_password']);
-Route::post('/form-reset-password/{token}', [ForgotPasswordController::class, 'form_reset_password']);
+Route::get('/form-reset-password/{token}', [ForgotPasswordController::class, 'form_reset_password']);
 // Route::get('/form-reset-password/{token}', [UpdatePasswordController::class, 'update_form']);
 
 
