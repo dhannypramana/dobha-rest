@@ -85,11 +85,12 @@
                             <input type="hidden" name="token" value="{{ $token }}">
                             <div class="inputbox mt-3"> 
                                 <span>New Password</span> 
-                                <input type="password" placeholder="new password" name="password" class="form-control" required>
+                                <input id="show" type="password" placeholder="new password" name="password" class="form-control" required>
                             </div>
                             <div class="inputbox mt-3"> 
                                 <span>New Password Confirmation</span>
-                                <input type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control" required>
+                                <input id="show_confirm" type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control" required>
+                                <input class="mt-3" type="checkbox" onclick="myFunction()"> Show Password
                             </div>
                             <input type="submit" value="Reset Password" class="btn btn-primary">
                         </form>
@@ -98,5 +99,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function myFunction() {
+            let x = document.getElementById("show")
+            let y = document.getElementById("show_confirm")
+            if (x.type === "password") {
+                x.type = "text";
+                y.type = "text";
+            } else {
+                x.type = "password";
+                y.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>
