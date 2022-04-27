@@ -85,15 +85,15 @@
                             <input type="hidden" name="token" value="{{ $token }}">
                             <div class="inputbox mt-3"> 
                                 <span>Email</span> 
-                                <input type="email" placeholder="Email" name="email" class="form-control"> 
+                                <input type="email" placeholder="Email" name="email" class="form-control" required> 
                             </div>
                             <div class="inputbox mt-3"> 
                                 <span>New Password</span> 
-                                <input type="password" placeholder="new password" name="password" class="form-control">
+                                <input type="password" placeholder="new password" name="password" class="form-control" required>
                             </div>
                             <div class="inputbox mt-3"> 
                                 <span>New Password Confirmation</span>
-                                <input type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control">
+                                <input type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control" required>
                             </div>
                             <input type="submit" value="Reset Password" class="btn btn-primary">
                         </form>
