@@ -39,10 +39,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->product_category_id == 0) {
-            $request->product_category_id == 1;
-        }
-        
         $request->validate([
             'kode_produk' => 'required|min:3|max:12|unique:products,kode_produk',
             'nama_produk' => 'required|min:3|max:255|unique:products,nama_produk',
@@ -50,7 +46,6 @@ class ProductController extends Controller
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
             'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
-            'product_category_id' => 'required|numeric'
         ]);
 
         $imgName = "";
@@ -60,6 +55,12 @@ class ProductController extends Controller
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
             Storage::putFileAs('images', $request->file('gambar_produk'), $imgName);
+        }
+
+        if ($request->product_category_id == 0) {
+            return response()->json([
+                'error' => 'Kategori belum dipilih'
+            ]);
         }
 
         $product = Product::create([
