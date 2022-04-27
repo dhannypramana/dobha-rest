@@ -58,14 +58,6 @@ class ProductController extends Controller
             Storage::putFileAs('images', $request->file('gambar_produk'), $imgName);
         }
 
-        if ($request->product_category_id == 0) {
-            return response()->json([
-                'data' => [
-                    'errors' => 'Kategori belum dipilih'
-                ]
-            ], 422);
-        }
-
         $product = Product::create([
             'kode_produk' => $request->kode_produk,
             'nama_produk' => $request->nama_produk,
