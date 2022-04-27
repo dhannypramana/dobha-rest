@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('provinsi')->nullable();
             $table->string('kabupaten')->nullable();
             $table->integer('id_kabupaten')->nullable();
+            $table->string('photo')->nullable();
         });
     }
 

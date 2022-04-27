@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth\User;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateController extends Controller
 {
@@ -70,9 +71,23 @@ class UpdateController extends Controller
         }
     }
 
-    public function update_photo(Request $request)
+    public function update_photo(User $user, Request $request)
     {
-        return 'Hello';
-        return $request->all();
+        $request->validate([
+            'photo' => 'file|image|mimes:jpg,jpeg,png|unique:users',
+        ]);
+
+        $imgName = "";
+
+        if($request->has('photo')){
+            $extension      = $request->file('photo')->extension();
+            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+
+            Storage::putFileAs('images', $request->file('photo'), $imgName);
+        }
+
+        $user->update([
+            'photo' => $imgName
+        ]);
     }
 }

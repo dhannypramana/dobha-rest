@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth\Admin;
 
+use Exception;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class UpdateController extends Controller
 {
@@ -24,7 +25,7 @@ class UpdateController extends Controller
 
             $admin->update([
                 'username' => $request->username,
-                'password' => $request->password
+                'password' => Hash::make($request->password)
             ]);
 
             return response()->json([
