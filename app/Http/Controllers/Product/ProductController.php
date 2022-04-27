@@ -39,6 +39,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->product_category_id == 0) {
+            $request->product_category_id == 1;
+        }
+        
         $request->validate([
             'kode_produk' => 'required|min:3|max:12|unique:products,kode_produk',
             'nama_produk' => 'required|min:3|max:255|unique:products,nama_produk',
