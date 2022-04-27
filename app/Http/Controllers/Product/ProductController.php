@@ -46,6 +46,7 @@ class ProductController extends Controller
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
             'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
+            'product_category_id' => 'required'
         ]);
 
         $imgName = "";
@@ -55,12 +56,6 @@ class ProductController extends Controller
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
             Storage::putFileAs('images', $request->file('gambar_produk'), $imgName);
-        }
-
-        if ($request->product_category_id == 0) {
-            return response()->json([
-                'error' => 'Kategori belum dipilih'
-            ]);
         }
 
         $product = Product::create([
