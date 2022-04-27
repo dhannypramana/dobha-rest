@@ -61,7 +61,7 @@ class ProductController extends Controller
         if ($request->product_category_id == 0) {
             return response()->json([
                 'error' => 'Kategori belum dipilih'
-            ]);
+            ], 422);
         }
 
         $product = Product::create([
