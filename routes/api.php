@@ -45,9 +45,9 @@ Route::prefix('/auth')->group(function () {
         Route::post('/register', RegisterController::class)->middleware('guest:api');
         Route::post('/login', LoginController::class)->middleware('guest:api');
         Route::post('/update-alamat/{user:username}', UserUpdateController::class)->middleware('verified');
+        Route::post('/update-user-photo/{user:username}', UserUpdateController::class, 'update_photo');
         Route::post('/update-user/{user:username}', UserUpdateController::class, 'update_user')->middleware('verified');
         Route::post('/logout', LogoutController::class)->middleware('auth:api');
-        // update gambar
     });
     // Admin Authentication
     Route::prefix('/admin')->group(function () {

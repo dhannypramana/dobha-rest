@@ -101,6 +101,7 @@ class ProductController extends Controller
             'deskripsi_produk' => 'required',
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
+            'product_category_id' => 'required'
         ]);
 
         $product->update([

@@ -69,4 +69,10 @@ class UpdateController extends Controller
             ]);
         }
     }
+
+    public function update_photo(Request $request)
+    {
+        return 'Hello';
+        return $request->all();
+    }
 }
