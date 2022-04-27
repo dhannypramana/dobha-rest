@@ -60,7 +60,9 @@ class ProductController extends Controller
 
         if ($request->product_category_id == 0) {
             return response()->json([
-                'error' => 'Kategori belum dipilih'
+                'data' => [
+                    'errors' => 'Kategori belum dipilih'
+                ]
             ], 422);
         }
 
