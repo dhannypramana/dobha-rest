@@ -54,18 +54,16 @@ class ForgotPasswordController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
-            return response([
-                'message' => 'Password reset success'
-            ]);
+            return view('reset_success');
         }
 
-        return response([
-            'message' => __($status)
-        ], 500);
+        return view('token-reset-expired');
     }
 
-    public function form_reser_password($token)
+    public function form_reset_password($token)
     {
-        return 'Hello, World!';
+        return view('form-reset-password', [
+            'token' => $token
+        ]);
     }
 }

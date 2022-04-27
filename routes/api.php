@@ -67,9 +67,6 @@ Route::prefix('/auth')->group(function () {
     });
 });
 
-Route::get('reset-password/{token}', [UpdatePasswordController::class, 'update_form']);
-Route::post('reset-password', [UpdatePasswordController::class, 'reset_password']);
-
 // Accessible Admin Auth
 Route::prefix('/article')->middleware('auth:admins-api')->group(function () {
     Route::post('/create-new-article', [ArticleController::class, 'store']);
@@ -122,7 +119,8 @@ Route::get('/email/resend/{id}', [VerificationController::class, 'resend'])->mid
 // Forgot Password API
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_password']); // get $request->email
 Route::post('/reset-password', [ForgotPasswordController::class, 'reset_password']);
-Route::get('/form-reset-password', [ForgotPasswordController::class, 'reset_password']);
+Route::get('/form-reset-password/{token}', [ForgotPasswordController::class, 'form_reset_password']);
+// Route::get('/form-reset-password/{token}', [UpdatePasswordController::class, 'update_form']);
 
 
 // Get Data User
