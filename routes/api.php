@@ -68,7 +68,7 @@ Route::prefix('/auth')->group(function () {
 });
 
 Route::get('reset-password/{token}', [UpdatePasswordController::class, 'update_form']);
-Route::psot('reset-password', [UpdatePasswordController::class, 'reset_password']);
+Route::post('reset-password', [UpdatePasswordController::class, 'reset_password']);
 
 // Accessible Admin Auth
 Route::prefix('/article')->middleware('auth:admins-api')->group(function () {
