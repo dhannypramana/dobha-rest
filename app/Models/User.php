@@ -78,7 +78,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function sendPasswordResetNotification($token)
     {
-        $url = 'https://dobha.herokuapp.com/reset-password?token='.$token;
+        $url = 'https://dobha.herokuapp.com/reset-password/'.$token;
         $this->notify(new ResetPasswordNotification($url));
     }
 }

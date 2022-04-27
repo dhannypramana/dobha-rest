@@ -8,5 +8,6 @@
 </head>
 <body>
     <h1>Hello, Worldz!</h1>
+    {{ $token }}
 </body>
 </html>

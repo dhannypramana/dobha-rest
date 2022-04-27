@@ -27,6 +27,7 @@ use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
 // use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\Admin\LogoutController as AdminLogoutController;
 use App\Http\Controllers\Auth\Admin\RegisterController as AdminRegisterController;
+use App\Http\Controllers\UpdatePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,9 @@ Route::prefix('/auth')->group(function () {
         Route::post('/reply-review/{product_id}/{review_id}', [AdminController::class, 'reply_review'])->middleware('auth:admins-api');
     });
 });
+
+Route::get('reset-password/{token}', [UpdatePasswordController::class, 'update_form']);
+Route::psot('reset-password', [UpdatePasswordController::class, 'reset_password']);
 
 // Accessible Admin Auth
 Route::prefix('/article')->middleware('auth:admins-api')->group(function () {
