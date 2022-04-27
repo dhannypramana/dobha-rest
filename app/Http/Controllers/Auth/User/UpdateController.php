@@ -73,21 +73,37 @@ class UpdateController extends Controller
 
     public function update_photo(User $user, Request $request)
     {
-        $request->validate([
-            'photo' => 'file|image|mimes:jpg,jpeg,png|unique:users',
-        ]);
+        try {
+            $request->validate([
+                'photo' => 'file|image|mimes:jpg,jpeg,png|unique:users',
+            ]);
+    
+            $imgName = "";
+    
+            if($request->has('photo')){
+                $extension      = $request->file('photo')->extension();
+                $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+    
+                Storage::putFileAs('images', $request->file('photo'), $imgName);
+            } else {
+                return response()->json([
+                    'error' => 'no photo uploaded'
+                ]);
+            }
 
-        $imgName = "";
+            $user->update([
+                'photo' => $imgName
+            ]);
 
-        if($request->has('photo')){
-            $extension      = $request->file('photo')->extension();
-            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
-
-            Storage::putFileAs('images', $request->file('photo'), $imgName);
+            return response()->json([
+                'message' => 'update photo profile success',
+                'user' => $user
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 422);
         }
 
-        $user->update([
-            'photo' => $imgName
-        ]);
     }
 }
