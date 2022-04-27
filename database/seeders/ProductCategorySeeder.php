@@ -15,9 +15,6 @@ class ProductCategorySeeder extends Seeder
     public function run()
     {
         ProductCategory::create([
-            'name' => 'Uncategorized'
-        ]);
-        ProductCategory::create([
             'name' => 'Parfume laki laki'
         ]);
         ProductCategory::create([

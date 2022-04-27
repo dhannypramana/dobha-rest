@@ -24,6 +24,7 @@ class UpdateController extends Controller
 
             $admin->update([
                 'username' => $request->username,
+                'password' => $request->password
             ]);
 
             return response()->json([
