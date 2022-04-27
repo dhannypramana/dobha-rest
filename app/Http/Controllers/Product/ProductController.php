@@ -46,6 +46,7 @@ class ProductController extends Controller
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
             'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
+            'product_category_id' => 'required|numeric'
         ]);
 
         $imgName = "";
