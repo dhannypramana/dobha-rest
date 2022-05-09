@@ -96,7 +96,7 @@ Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
 Route::get('/related-articles/{category_id}', [ArticleController::class, 'show_related']);
 Route::get('/related-products/{category_id}', [ProductController::class, 'show_related']);
 
-Route::get('/read-all-product-paginate', [ArticleController::class, 'product_paginate']);
+Route::get('/read-all-product-paginate', [ProductController::class, 'paginate']);
 Route::get('/read-all-product', [ProductController::class, 'index']);
 Route::get('/read-product/{slug}', [ProductController::class, 'show']);
 

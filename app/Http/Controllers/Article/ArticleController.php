@@ -28,14 +28,6 @@ class ArticleController extends Controller
         $article = Article::paginate(4);
         return new ArticleCollection($article);
     }
-    public function product_paginate()
-    {
-        // $article = Article::get();
-
-        // Pagination
-        $products = Product::paginate(4);
-        return new ArticleCollection($products);
-    }
     /**
      * Display a listing of the resource.
      *
