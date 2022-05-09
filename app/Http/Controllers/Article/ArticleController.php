@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Article;
 
 use Exception;
+use App\Models\Product;
 use App\Helpers\Helpers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -26,6 +27,14 @@ class ArticleController extends Controller
         // Pagination
         $article = Article::paginate(4);
         return new ArticleCollection($article);
+    }
+    public function product_paginate()
+    {
+        // $article = Article::get();
+
+        // Pagination
+        $products = Product::paginate(4);
+        return new ArticleCollection($products);
     }
     /**
      * Display a listing of the resource.
