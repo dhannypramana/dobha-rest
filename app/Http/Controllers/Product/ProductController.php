@@ -112,7 +112,7 @@ class ProductController extends Controller
             $request->validate([
                 'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products|max:1024',
             ]);
-            
+
             $extension      = $request->file('gambar_produk')->extension();
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
@@ -146,6 +146,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+        Storage::disk('google')->delete($product->gambar_produk);
 
         return response()->json([
             'success' => 'success delete product'
