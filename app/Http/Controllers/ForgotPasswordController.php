@@ -62,7 +62,7 @@ class ForgotPasswordController extends Controller
     public function form_reset_password($token)
     {
         return view('form-reset-password', [
-            'token' => $token
+            'token' => $token,
         ]);
     }
 }

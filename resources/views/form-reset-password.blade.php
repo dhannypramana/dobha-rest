@@ -83,6 +83,10 @@
                         <h2>Reset Password</h2>
                         <form action="/api/reset-password" method="post">
                             <input type="hidden" name="token" value="{{ $token }}">
+                            {{-- <div class="inputbox mt-3"> 
+                                <span>Email</span> 
+                                <input type="email" placeholder="Please verify your email again" name="email" class="form-control" required>
+                            </div> --}}
                             <div class="inputbox mt-3"> 
                                 <span>New Password</span> 
                                 <input id="show" type="password" placeholder="new password" name="password" class="form-control" required>
