@@ -37,7 +37,7 @@ class ForgotPasswordController extends Controller
     {
         $request->validate([
             'token' => 'required',
-            'password' => ['required', 'confirmed']
+            'password' => ['required', 'confirmed'],
         ]);
 
         $status = Password::reset(
