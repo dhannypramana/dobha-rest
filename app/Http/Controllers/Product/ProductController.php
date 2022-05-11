@@ -45,7 +45,7 @@ class ProductController extends Controller
             'deskripsi_produk' => 'required',
             'stock_produk' => 'required',
             'harga_satuan' => 'required',
-            'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products',
+            'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products|max:1024',
             'product_category_id' => 'required'
         ]);
 
@@ -109,6 +109,10 @@ class ProductController extends Controller
         $image = "";
 
         if($request->has('gambar_produk')){
+            $request->validate([
+                'gambar_produk' => 'file|image|mimes:jpg,jpeg,png|unique:products|max:1024',
+            ]);
+            
             $extension      = $request->file('gambar_produk')->extension();
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 

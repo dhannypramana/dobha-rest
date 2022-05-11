@@ -73,39 +73,32 @@ class UpdateController extends Controller
 
     public function update_photo(User $user, Request $request)
     {
-        try {
-            $request->validate([
-                'photo' => 'file|image|mimes:jpg,jpeg,png|unique:users',
-            ]);
-    
-            $imgName = "";
-            $image = "";
-    
-            if($request->has('photo')){
-                $extension      = $request->file('photo')->extension();
-                $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
-    
-                Storage::disk('google')->putFileAs('', $request->file('photo'), $imgName);
-                $image = Storage::disk('google')->url($imgName);
-            } else {
-                return response()->json([
-                    'error' => 'no photo uploaded'
-                ]);
-            }
+        $request->validate([
+            'photo' => 'file|image|mimes:jpg,jpeg,png|unique:users|max:1024',
+        ]);
 
-            $user->update([
-                'photo' => $image
-            ]);
+        $imgName = "";
+        $image = "";
 
+        if($request->has('photo')){
+            $extension      = $request->file('photo')->extension();
+            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+
+            Storage::disk('google')->putFileAs('', $request->file('photo'), $imgName);
+            $image = Storage::disk('google')->url($imgName);
+        } else {
             return response()->json([
-                'message' => 'update photo profile success',
-                'user' => $user
+                'error' => 'no photo uploaded'
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 422);
         }
 
+        $user->update([
+            'photo' => $image
+        ]);
+
+        return response()->json([
+            'message' => 'update photo profile success',
+            'user' => $user
+        ]);
     }
 }

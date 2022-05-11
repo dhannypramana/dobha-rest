@@ -50,7 +50,7 @@ class ArticleController extends Controller
         $request->validate([
             'title' => 'required|min:3|max:255',
             'body' => 'required',
-            'image' => 'file|image|mimes:jpg,jpeg,png|unique:articles',
+            'image' => 'file|image|mimes:jpg,jpeg,png|unique:articles|max:1024',
             'category_id' => 'required'
         ]);
 
@@ -107,6 +107,10 @@ class ArticleController extends Controller
         $image = "";
 
         if($request->has('image')){
+            $request->validate([
+                'image' => 'file|image|mimes:jpg,jpeg,png|unique:articles|max:1024',
+            ]);
+            
             $extension      = $request->file('image')->extension();
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
