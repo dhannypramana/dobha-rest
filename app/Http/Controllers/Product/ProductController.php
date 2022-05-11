@@ -115,7 +115,7 @@ class ProductController extends Controller
             Storage::disk('google')->putFileAs('', $request->file('gambar_produk'), $imgName);
             $image = Storage::disk('google')->url($imgName);
 
-            $article->update([
+            $product->update([
                 'gambar_produk' => $image
             ]);
         }
