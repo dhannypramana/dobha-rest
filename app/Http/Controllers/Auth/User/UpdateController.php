@@ -79,12 +79,14 @@ class UpdateController extends Controller
             ]);
     
             $imgName = "";
+            $image = "";
     
             if($request->has('photo')){
                 $extension      = $request->file('photo')->extension();
                 $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
     
-                Storage::putFileAs('images', $request->file('photo'), $imgName);
+                Storage::disk('google')->putFileAs('', $request->file('photo'), $imgName);
+                $image = Storage::disk('google')->url($imgName);
             } else {
                 return response()->json([
                     'error' => 'no photo uploaded'
@@ -92,7 +94,7 @@ class UpdateController extends Controller
             }
 
             $user->update([
-                'photo' => $imgName
+                'photo' => $image
             ]);
 
             return response()->json([

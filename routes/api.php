@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Product\ReviewController;
+use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Auth\User\LoginController;
 use App\Http\Controllers\Product\ProductController;
@@ -22,12 +24,11 @@ use App\Http\Controllers\Auth\Admin\UpdateController;
 use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\Admin\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+// use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
-// use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\Admin\LogoutController as AdminLogoutController;
 use App\Http\Controllers\Auth\Admin\RegisterController as AdminRegisterController;
-use App\Http\Controllers\UpdatePasswordController;
 
 /*
 |--------------------------------------------------------------------------
