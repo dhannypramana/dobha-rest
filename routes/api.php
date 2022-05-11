@@ -123,6 +123,5 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'reset_password
 Route::get('/form-reset-password/{token}', [ForgotPasswordController::class, 'form_reset_password']);
 // Route::get('/form-reset-password/{token}', [UpdatePasswordController::class, 'update_form']);
 
-
 // Get Data User
 Route::get('/user/{id}', [UserController::class, 'show']);
