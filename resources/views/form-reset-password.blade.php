@@ -81,7 +81,7 @@
                 <div class="col-md-8">
                     <div class="form">
                         <h2>Reset Password</h2>
-                        <form action="/api/reset-password" method="post">
+                        <form action="{{ route('resetpassword') }}" method="post">
                             <input type="hidden" name="token" value="{{ $token }}">
                             {{-- <div class="inputbox mt-3"> 
                                 <span>Email</span> 
