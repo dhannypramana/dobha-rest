@@ -50,12 +50,14 @@ class ProductController extends Controller
         ]);
 
         $imgName = "";
+        $image = "";
 
         if($request->has('gambar_produk')){
             $extension      = $request->file('gambar_produk')->extension();
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
-            Storage::putFileAs('images', $request->file('gambar_produk'), $imgName);
+            Storage::disk('google')->putFileAs('', $request->file('gambar_produk'), $imgName);
+            $image = Storage::disk('google')->url($imgName);
         }
 
         $product = Product::create([
@@ -65,9 +67,8 @@ class ProductController extends Controller
             'deskripsi_produk' => $request->deskripsi_produk,
             'stock_produk' => $request->stock_produk,
             'harga_satuan' => $request->harga_satuan,
-            'gambar_produk' => $request->gambar_produk,
-            'product_category_id' => $request->product_category_id
-            // 'gambar_produk' => $imgName
+            'product_category_id' => $request->product_category_id,
+            'gambar_produk' => $image
         ]);
 
         return new ProductResource($product);
@@ -103,6 +104,21 @@ class ProductController extends Controller
             'harga_satuan' => 'required',
             'product_category_id' => 'required'
         ]);
+
+        $imgName = "";
+        $image = "";
+
+        if($request->has('gambar_produk')){
+            $extension      = $request->file('gambar_produk')->extension();
+            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+
+            Storage::disk('google')->putFileAs('', $request->file('gambar_produk'), $imgName);
+            $image = Storage::disk('google')->url($imgName);
+
+            $article->update([
+                'gambar_produk' => $image
+            ]);
+        }
 
         $product->update([
             'kode_produk' => $request->kode_produk,
