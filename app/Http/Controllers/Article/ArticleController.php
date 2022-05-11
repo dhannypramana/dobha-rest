@@ -56,13 +56,14 @@ class ArticleController extends Controller
 
         
         $imgName = "";
+        $image = "";
 
         if($request->has('image')){
             $extension      = $request->file('image')->extension();
             $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
 
-            // Storage::putFileAs('images', $request->file('image'), $imgName);
-            $request->image->move(public_path('/images'), $imgName);
+            Storage::disk('google')->putFileAs('', $request->file('image'), $imgName);
+            $image = Storage::disk('google')->url($imgName);
         }
 
         $article = Article::create([
@@ -71,8 +72,7 @@ class ArticleController extends Controller
             'category_id' => $request->category_id,
             'slug' => Str::slug($request->title),
             'excerpt' => Helpers::generateExcerpt($request->body),
-            // 'image' => $request->image
-            'image' => $imgName,
+            'image' => $image,
         ]);
 
         return new ArticleResource($article);
@@ -102,6 +102,21 @@ class ArticleController extends Controller
             'title' => 'required|min:3|max:255',
             'body' => 'required',
         ]);
+
+        $imgName = "";
+        $image = "";
+
+        if($request->has('image')){
+            $extension      = $request->file('image')->extension();
+            $imgName        = time() . date('dmyHis') . rand() . '.' . $extension;
+
+            Storage::disk('google')->putFileAs('', $request->file('image'), $imgName);
+            $image = Storage::disk('google')->url($imgName);
+
+            $article->update([
+                'image' => $image
+            ]);
+        }
 
         $article->update([
             'title' => $request->title,
