@@ -25,7 +25,7 @@ class ArticleController extends Controller
         // $article = Article::get();
 
         // Pagination
-        $article = Article::paginate(4);
+        $article = Article::orderBy('updated_at', 'desc')->paginate(4);
         return new ArticleCollection($article);
     }
     /**
