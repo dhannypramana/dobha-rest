@@ -91,14 +91,14 @@ Route::prefix('/product')->middleware(['auth:api', 'verified'])->group(function 
 Route::get('/article-categories', [CategoryController::class, 'index']);
 Route::get('/article-category/{id}', [CategoryController::class, 'show']);
 Route::post('/create-article-category', [CategoryController::class, 'store']);
-Route::post('/update-article-category', [CategoryController::class, 'update']);
-Route::post('/delete-article-category', [CategoryController::class, 'destroy']);
+Route::post('/update-article-category/{id}', [CategoryController::class, 'update']);
+Route::post('/delete-article-category/{id}', [CategoryController::class, 'destroy']);
 
 Route::get('/product-categories', [ProductCategoryController::class, 'index']);
 Route::get('/product-category/{id}', [ProductCategoryController::class, 'show']);
 Route::post('/create-product-category', [ProductCategoryController::class, 'store']);
-Route::post('/update-product-category', [ProductCategoryController::class, 'update']);
-Route::post('/delete-product-category', [ProductCategoryController::class, 'destroy']);
+Route::post('/update-product-category/{id}', [ProductCategoryController::class, 'update']);
+Route::post('/delete-product-category/{id}', [ProductCategoryController::class, 'destroy']);
 
 Route::get('/read-all-article-paginate', [ArticleController::class, 'paginate']);
 Route::get('/read-all-article', [ArticleController::class, 'index']);
