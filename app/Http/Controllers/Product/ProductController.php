@@ -211,8 +211,7 @@ class ProductController extends Controller
     {
         try {
             $products = Product::orderBy('rating_produk', 'DESC')->paginate(5);
-            return $products;
-            
+
             return response()->json([
                 'message' => 'popular products with paginate(5)',
                 'products' => $products
