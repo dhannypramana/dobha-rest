@@ -34,6 +34,7 @@ class LoginController extends Controller
             'message' => 'login success',
             'user' => $admin,
             'expired_token' => 1 /* JWT TTL */ * 60000,
+            'expired_token_timestamp' => strtotime("+60 minutes"),
             'token' => $token
         ]);
     }
