@@ -107,6 +107,8 @@ Route::get('/related-articles/{category_id}', [ArticleController::class, 'show_r
 Route::get('/related-products/{category_id}', [ProductController::class, 'show_related']);
 
 Route::get('/read-all-product-paginate', [ProductController::class, 'paginate']);
+// Search Product With Paginate
+Route::get('/read-all-product-paginate?q="{title}"', [ProductController::class, 'search_paginate']);
 Route::get('/read-all-product', [ProductController::class, 'index']);
 Route::get('/read-product/{slug}', [ProductController::class, 'show']);
 

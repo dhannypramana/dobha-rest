@@ -25,10 +25,21 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function paginate()
+    public function paginate(Request $request)
     {
+        if ($request->has('q')) {
+            $request = strtolower($request->q);
+            $product = Product::where('nama_produk', 'like', "%" . $request . "%")->paginate(5)->appends(request()->query());;
+            return $product;
+        }
+
         $product = Product::orderBy('updated_at', 'desc')->paginate(5);
         return new ProductCollection($product);
+    }
+
+    public function search_paginate($title)
+    {
+        return $title;
     }
 
     /**
