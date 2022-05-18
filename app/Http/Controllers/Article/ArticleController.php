@@ -20,14 +20,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function paginate()
-    {
-        // Pagination
-        $article = Article::orderBy('updated_at', 'desc')->paginate(4);
-        return new ArticleCollection($article);
-    }
-
-    public function search_paginate(Request $request)
+    public function paginate(Request $request)
     {
         if ($request->has('q')) {
             $request = strtolower($request->q);
@@ -35,6 +28,7 @@ class ArticleController extends Controller
             return $article;
         }
 
+        // Pagination
         $article = Article::orderBy('updated_at', 'desc')->paginate(4);
         return new ArticleCollection($article);
     }

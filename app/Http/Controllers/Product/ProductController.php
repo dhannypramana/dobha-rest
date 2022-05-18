@@ -37,11 +37,6 @@ class ProductController extends Controller
         return new ProductCollection($product);
     }
 
-    public function search_paginate($title)
-    {
-        return $title;
-    }
-
     /**
      * Store a newly created resource in storage.
      *
