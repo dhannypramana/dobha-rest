@@ -30,7 +30,7 @@ class ProductController extends Controller
         if ($request->has('q')) {
             $request = strtolower($request->q);
             $product = Product::where('nama_produk', 'ILIKE', '%' . trim($request) . '%')->paginate(5)->withQueryString();
-            return $product;
+            return new ProductCollection($product);
         }
 
         $product = Product::orderBy('updated_at', 'desc')->paginate(5);

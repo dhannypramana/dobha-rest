@@ -14,6 +14,8 @@ use Illuminate\Validation\Rules\Password as RulesPassword;
 
 class ForgotPasswordController extends Controller
 {
+    use ResetsPassword;
+    
     public function forgot_password(Request $request)
     {
         $request->validate([
@@ -49,7 +51,7 @@ class ForgotPasswordController extends Controller
                 $user->update([
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60)
-                ])->save();
+                ]);
 
                 event(new PasswordReset($user));
             }

@@ -25,7 +25,7 @@ class ArticleController extends Controller
         if ($request->has('q')) {
             $request = strtolower($request->q);
             $article = Article::where('title', 'ILIKE', '%' . trim($request) . '%')->paginate(4)->withQueryString();
-            return $article;
+            return new ArticleCollection($article);
         }
 
         // Pagination
