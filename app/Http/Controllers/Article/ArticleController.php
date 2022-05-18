@@ -22,9 +22,19 @@ class ArticleController extends Controller
      */
     public function paginate()
     {
-        // $article = Article::get();
-
         // Pagination
+        $article = Article::orderBy('updated_at', 'desc')->paginate(4);
+        return new ArticleCollection($article);
+    }
+
+    public function search_paginate(Request $request)
+    {
+        if ($request->has('q')) {
+            $request = strtolower($request->q);
+            $article = Article::where('title', 'ILIKE', '%' . trim($request) . '%')->paginate(4)->withQueryString();
+            return $article;
+        }
+
         $article = Article::orderBy('updated_at', 'desc')->paginate(4);
         return new ArticleCollection($article);
     }

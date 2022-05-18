@@ -101,6 +101,8 @@ Route::post('/update-product-category/{id}', [ProductCategoryController::class, 
 Route::post('/delete-product-category/{id}', [ProductCategoryController::class, 'destroy']);
 
 Route::get('/read-all-article-paginate', [ArticleController::class, 'paginate']);
+// Search Article With Paginate
+Route::get('/read-all-product-paginate?q="{title}"', [ArticleController::class, 'search_paginate']);
 Route::get('/read-all-article', [ArticleController::class, 'index']);
 Route::get('/read-article/{article:slug}', [ArticleController::class, 'show']);
 Route::get('/related-articles/{category_id}', [ArticleController::class, 'show_related']);
