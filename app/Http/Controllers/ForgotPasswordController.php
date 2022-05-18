@@ -38,11 +38,13 @@ class ForgotPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'password' => ['required', 'confirmed'],
+            'email' => 'required'
         ]);
 
         $status = Password::reset(
             $request->only('password', 'password_confirmation', 'token'),
-            function($user) use ($request) {
+            function() use ($request) {
+                $user = User::whereEmail($request->email)->first();
                 $user->forceFill([
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60)
