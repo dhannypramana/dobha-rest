@@ -29,7 +29,7 @@ class ProductController extends Controller
     {
         if ($request->has('q')) {
             $request = strtolower($request->q);
-            $product = Product::where('nama_produk', 'like', "%" . $request . "%")->paginate(5)->appends(request()->query());;
+            $product = Product::where('nama_produk', 'like', "%" . $request . "%")->paginate(5)->withQueryString();
             return $product;
         }
 
