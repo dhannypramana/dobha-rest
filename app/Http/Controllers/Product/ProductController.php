@@ -111,6 +111,7 @@ class ProductController extends Controller
             'product_category_id' => 'required'
         ]);
 
+
         $imgName = "";
         $image = "";
 
