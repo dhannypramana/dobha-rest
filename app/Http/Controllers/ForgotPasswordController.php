@@ -62,6 +62,7 @@ class ForgotPasswordController extends Controller
 
         $user->update([
             'password' => Hash::make($request->password),
+            'remember_token' => Str::random(40)
         ]);
 
         event(new PasswordReset($user));
