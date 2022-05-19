@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>404 - Page Not Found</title>
+    <title>{{ $error_status }} - {{ $message }}</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -47,8 +47,8 @@
 
                     <!-- 404 Error Text -->
                     <div class="text-center">
-                        <div class="error mx-auto" data-text="404">404</div>
-                        <p class="lead text-gray-800 mb-5">Email Not Found</p>
+                        <div class="error mx-auto" data-text="422">{{ $error_status }}</div>
+                        <p class="lead text-gray-800 mb-5">{{ $message }}</p>
                         <p class="text-gray-500 mb-0"><button class="btn btn-primary" onclick="history.back()">Go Back</button></p>
                     </div>
 

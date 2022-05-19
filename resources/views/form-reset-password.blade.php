@@ -56,20 +56,15 @@
                                         </div>
                                         <div class="inputbox mt-3"> 
                                             <span>New Password</span> 
-                                            <input id="show" type="password" placeholder="new password" name="password" class="form-control @error('password') is-invalid @enderror" required>
-                                            @error('password')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="inputbox mt-3"> 
-                                            <span>New Password Confirmation</span>
-                                            <input id="show_confirm" type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control" required>
+                                            <input id="show" type="password" placeholder="password" name="password" class="form-control" required>
                                             <input class="mt-3" type="checkbox" onclick="myFunction()"> Show Password
+                                            @if(session('error'))
+                                                <div class="alert alert-danger">{{session('error')}}</div>
+                                            @endif
                                         </div>
                                         <br>
                                         <input type="submit" value="Reset Password" class="btn btn-primary">
+                                        <p class="small text-info mt-3"><sup>*</sup>Password minimal 8 karakter</p>
                                     </form>
                                 </div>
                             </div>
@@ -91,13 +86,10 @@
     <script>
         function myFunction() {
             let x = document.getElementById("show")
-            let y = document.getElementById("show_confirm")
             if (x.type === "password") {
                 x.type = "text";
-                y.type = "text";
             } else {
                 x.type = "password";
-                y.type = "password";
             }
         }
     </script>
