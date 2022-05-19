@@ -86,15 +86,15 @@ class UpdateController extends Controller
 
             Storage::disk('google')->putFileAs('', $request->file('photo'), $imgName);
             $image = Storage::disk('google')->url($imgName);
+            
+            $user->update([
+                'photo' => $image
+            ]);
         } else {
             return response()->json([
                 'error' => 'no photo uploaded'
             ]);
         }
-
-        $user->update([
-            'photo' => $image
-        ]);
 
         return response()->json([
             'message' => 'update photo profile success',
