@@ -218,10 +218,7 @@ class ProductController extends Controller
         try {
             $products = Product::orderBy('rating_produk', 'DESC')->paginate(5);
 
-            return response()->json([
-                'message' => 'popular products with paginate(5)',
-                'products' => $products
-            ]);
+            return new ProductCollection($products);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
