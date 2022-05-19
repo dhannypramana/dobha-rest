@@ -23,7 +23,7 @@ class PaymentAccountSeeder extends Seeder
             'payment_number' => '123456789'
         ]);
         PaymentAccount::create([
-            'method' => 'ovo',
+            'method' => 'gopay',
             'payment_number' => '987654321'
         ]);
     }
