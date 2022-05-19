@@ -56,7 +56,12 @@
                                         </div>
                                         <div class="inputbox mt-3"> 
                                             <span>New Password</span> 
-                                            <input id="show" type="password" placeholder="new password" name="password" class="form-control" required>
+                                            <input id="show" type="password" placeholder="new password" name="password" class="form-control @error('password') is-invalid @enderror" required>
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="inputbox mt-3"> 
                                             <span>New Password Confirmation</span>
