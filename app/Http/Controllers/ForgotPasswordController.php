@@ -14,8 +14,6 @@ use Illuminate\Validation\Rules\Password as RulesPassword;
 
 class ForgotPasswordController extends Controller
 {
-    use ResetsPassword;
-    
     public function forgot_password(Request $request)
     {
         $request->validate([
@@ -44,22 +42,31 @@ class ForgotPasswordController extends Controller
             'email' => 'required'
         ]);
 
-        $status = Password::reset(
-            $request->only('password', 'password_confirmation', 'token'),
-            function() use ($request) {
-                $user = User::whereEmail($request->email)->first();
-                $user->update([
-                    'password' => Hash::make($request->password),
-                    'remember_token' => Str::random(60)
-                ]);
+        $user = User::whereEmail($request->email)->first();
 
-                event(new PasswordReset($user));
-            }
-        );
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
 
-        if ($status == Password::PASSWORD_RESET) {
-            return view('reset_success');
-        }
+        event(new PasswordReset($user));
+        return view('reset_success');
+
+        // $status = Password::reset(
+        //     $request->only('password', 'password_confirmation', 'token'),
+        //     function() use ($request) {
+        //         $user = User::whereEmail($request->email)->first();
+        //         $user->update([
+        //             'password' => Hash::make($request->password),
+        //             'remember_token' => Str::random(60)
+        //         ]);
+
+        //         event(new PasswordReset($user));
+        //     }
+        // );
+
+        // if ($status == Password::PASSWORD_RESET) {
+        //     return view('reset_success');
+        // }
 
         return view('token-reset-expired');
     }
