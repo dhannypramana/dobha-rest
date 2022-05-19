@@ -12,6 +12,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\PaymentAccountController;
 use App\Http\Controllers\Product\ReviewController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\Article\ArticleController;
@@ -23,8 +24,8 @@ use App\Http\Controllers\Auth\Admin\DeleteController;
 use App\Http\Controllers\Auth\Admin\UpdateController;
 use App\Http\Controllers\Auth\User\RegisterController;
 use App\Http\Controllers\Auth\Admin\DashboardController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // use App\Http\Controllers\VerificationController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\Auth\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Auth\User\UpdateController as UserUpdateController;
 use App\Http\Controllers\Auth\Admin\LogoutController as AdminLogoutController;
@@ -135,3 +136,7 @@ Route::get('/form-reset-password/{token}', [ForgotPasswordController::class, 'fo
 
 // Get Data User
 Route::get('/user/{id}', [UserController::class, 'show']);
+
+/* UPDATE NOMOR PEMBAYARAN */
+Route::get('/payment', [PaymentAccountController::class, 'getAccount']);
+Route::post('/payment/update', [PaymentAccountController::class, 'updateAccount']);
