@@ -1,108 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title>Reset Password</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <style>
-    body {
-        background-color: #F50057
-    }
 
-    .container {
-        height: 100vh
-    }
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
-    .card {
-        width: 100%;
-        padding: 30px
-    }
-
-    .form {
-        padding: 20px
-    }
-
-    .form-control {
-        height: 50px;
-        background-color: #eee
-    }
-
-    .form-control:focus {
-        color: #495057;
-        background-color: #fff;
-        border-color: #f50057;
-        outline: 0;
-        box-shadow: none;
-        background-color: #eee
-    }
-
-    .inputbox {
-        margin-bottom: 15px
-    }
-
-    .register {
-        width: 200px;
-        height: 51px;
-        background-color: #f50057;
-        border-color: #f50057
-    }
-
-    .register:hover {
-        width: 200px;
-        height: 51px;
-        background-color: #f50057;
-        border-color: #f50057
-    }
-
-    .login {
-        color: #f50057;
-        text-decoration: none
-    }
-
-    .login:hover {
-        color: #f50057;
-        text-decoration: none
-    }
-
-    .form-check-input:checked {
-        background-color: #f50057;
-        border-color: #f50057
-    }
-    </style>
 </head>
-<body>
-    <div class="container d-flex justify-content-center align-items-center">
-        <div class="card">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="form">
-                        <h2>Reset Password</h2>
-                        <form action="{{ route('resetpassword') }}" method="post">
-                            <input type="hidden" name="token" value="{{ $token }}">
-                            <div class="inputbox mt-3"> 
-                                <span>Email</span> 
-                                <input type="email" placeholder="Please verify your email again" name="email" class="form-control" required>
+
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-7">
+                                <div class="p-5">
+                                    <div class="text-center"></div>
+                                    @if ($message = Session::get('error'))
+                                        <div class="alert alert-danger alert-block">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>    
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @endif
+                                    <form action="{{ route('resetpassword') }}" method="post">
+                                        <input type="hidden" name="token" value="{{ $token }}">
+                                        <div class="inputbox mt-3"> 
+                                            <span>Email</span> 
+                                            <input type="email" placeholder="Please verify your email again" name="email" class="form-control" required>
+                                        </div>
+                                        <div class="inputbox mt-3"> 
+                                            <span>New Password</span> 
+                                            <input id="show" type="password" placeholder="new password" name="password" class="form-control" required>
+                                        </div>
+                                        <div class="inputbox mt-3"> 
+                                            <span>New Password Confirmation</span>
+                                            <input id="show_confirm" type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control" required>
+                                            <input class="mt-3" type="checkbox" onclick="myFunction()"> Show Password
+                                        </div>
+                                        <br>
+                                        <input type="submit" value="Reset Password" class="btn btn-primary">
+                                    </form>
+                                </div>
                             </div>
-                            <div class="inputbox mt-3"> 
-                                <span>New Password</span> 
-                                <input id="show" type="password" placeholder="new password" name="password" class="form-control" required>
-                            </div>
-                            <div class="inputbox mt-3"> 
-                                <span>New Password Confirmation</span>
-                                <input id="show_confirm" type="password" placeholder="new password confirmation" name="password_confirmation" class="form-control" required>
-                                <input class="mt-3" type="checkbox" onclick="myFunction()"> Show Password
-                            </div>
-                            <input type="submit" value="Reset Password" class="btn btn-primary">
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
 
     <script>
         function myFunction() {

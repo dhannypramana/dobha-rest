@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;
@@ -42,7 +43,11 @@ class ForgotPasswordController extends Controller
             'email' => 'required'
         ]);
 
-        $user = User::whereEmail($request->email)->first();
+        $user = User::where('email', $request->email)->first();
+
+        if ($user === null) {
+            return view('email-not-found');
+        }
 
         $user->update([
             'password' => Hash::make($request->password),
@@ -50,25 +55,6 @@ class ForgotPasswordController extends Controller
 
         event(new PasswordReset($user));
         return view('reset_success');
-
-        // $status = Password::reset(
-        //     $request->only('password', 'password_confirmation', 'token'),
-        //     function() use ($request) {
-        //         $user = User::whereEmail($request->email)->first();
-        //         $user->update([
-        //             'password' => Hash::make($request->password),
-        //             'remember_token' => Str::random(60)
-        //         ]);
-
-        //         event(new PasswordReset($user));
-        //     }
-        // );
-
-        // if ($status == Password::PASSWORD_RESET) {
-        //     return view('reset_success');
-        // }
-
-        return view('token-reset-expired');
     }
 
     public function form_reset_password($token)
